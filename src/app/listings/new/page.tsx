@@ -1,9 +1,10 @@
-import { auth } from '@/auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth-options';
 import { redirect } from 'next/navigation';
 import ListingForm from '@/components/ListingForm';
 
 export default async function NewListingPage() {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   if (!session) redirect('/api/auth/signin');
 
   return (

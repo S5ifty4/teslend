@@ -1,24 +1,19 @@
-import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
+import { NextAuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
 import { supabaseAdmin } from '@/lib/supabase';
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
-      // Upsert user into Supabase
       await supabaseAdmin.from('users').upsert(
-        {
-          email: user.email,
-          name: user.name ?? null,
-          image: user.image ?? null,
-        },
+        { email: user.email, name: user.name ?? null, image: user.image ?? null },
         { onConflict: 'email' }
       );
       return true;
@@ -37,4 +32,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-});
+  secret: process.env.NEXTAUTH_SECRET,
+};
