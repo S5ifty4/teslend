@@ -1,65 +1,101 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import ListingGrid from '@/components/ListingGrid';
+import { ACCESSORY_CATEGORIES, CATEGORY_ICONS } from '@/lib/constants';
+import { Listing } from '@/lib/types';
 
-export default function Home() {
+async function getRecentListings(): Promise<Listing[]> {
+  try {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/listings?limit=6`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const listings = await getRecentListings();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div>
+      {/* Hero */}
+      <section className="bg-black text-white py-24 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-bold mb-4">
+            Rent Tesla accessories.{' '}
+            <span style={{ color: '#E31937' }}>Bay Area first.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl text-gray-400 mb-8">
+            Tow hitches, bike racks, roof systems — borrow from Tesla owners near you.
           </p>
+          <div className="flex gap-4 justify-center">
+            <Link href="/browse">
+              <Button size="lg" style={{ backgroundColor: '#E31937', color: 'white' }}>
+                Browse Accessories
+              </Button>
+            </Link>
+            <Link href="/listings/new">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
+                List an Accessory
+              </Button>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Categories */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <h2 className="text-2xl font-bold mb-8">Browse by Category</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {ACCESSORY_CATEGORIES.map((cat) => (
+            <Link key={cat} href={`/browse?category=${encodeURIComponent(cat)}`}>
+              <Card className="hover:shadow-md transition-shadow cursor-pointer text-center">
+                <CardContent className="p-6">
+                  <div className="text-3xl mb-2">{CATEGORY_ICONS[cat]}</div>
+                  <p className="text-sm font-medium leading-tight">{cat}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* How it works */}
+      <section className="bg-gray-50 py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl font-bold mb-12">How it works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { step: '1', title: 'List', desc: 'Post your Tesla accessory — hitch, rack, cargo box — with photos and your daily rate.', icon: '📸' },
+              { step: '2', title: 'Browse', desc: 'Filter by Tesla model and accessory type to find exactly what you need.', icon: '🔍' },
+              { step: '3', title: 'Connect', desc: 'Send a message through our secure relay. Neither side sees the other\'s real email.', icon: '✉️' },
+            ].map(({ step, title, desc, icon }) => (
+              <div key={step} className="text-center">
+                <div className="text-4xl mb-4">{icon}</div>
+                <h3 className="font-bold text-lg mb-2">{step}. {title}</h3>
+                <p className="text-gray-500 text-sm">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recent listings */}
+      {listings.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold">Recent Listings</h2>
+            <Link href="/browse" className="text-sm font-medium" style={{ color: '#E31937' }}>
+              View all →
+            </Link>
+          </div>
+          <ListingGrid listings={listings} />
+        </section>
+      )}
     </div>
   );
 }

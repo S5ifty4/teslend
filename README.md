@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Teslend 🚗
 
-## Getting Started
+> Turo for Tesla accessories. Bay Area first.
 
-First, run the development server:
+P2P rental marketplace for Tesla accessories — tow hitches, bike racks, roof systems, cargo boxes, and more.
+
+## Stack
+
+- **Next.js 14** App Router + TypeScript
+- **NextAuth.js v5** with Google OAuth
+- **Supabase** (Postgres + Storage)
+- **Tailwind CSS** + shadcn/ui
+- **Resend** for secure email relay
+- **Vercel** (deploy target)
+
+**Total infra cost: $0/month**
+
+---
+
+## Setup
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/yourname/teslend
+cd teslend
+npm install
+```
+
+### 2. Environment variables
+
+```bash
+cp .env.local.example .env.local
+```
+
+Fill in:
+- `NEXTAUTH_SECRET` — generate with `openssl rand -base64 32`
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — [Google Cloud Console](https://console.cloud.google.com/)
+- `NEXT_PUBLIC_SUPABASE_URL` / keys — your Supabase project
+- `RESEND_API_KEY` — [resend.com](https://resend.com)
+
+### 3. Supabase setup
+
+In your Supabase project:
+
+1. Run `src/lib/schema.sql` in the SQL editor
+2. Create a Storage bucket named `listing-images` (set to **Public**)
+3. Set Storage policy: allow all inserts (or restrict to authenticated)
+
+### 4. Google OAuth
+
+In Google Cloud Console:
+- Authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
+- For production: `https://yourdomain.com/api/auth/callback/google`
+
+### 5. Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy to Vercel
 
-## Learn More
+```bash
+vercel --prod
+```
 
-To learn more about Next.js, take a look at the following resources:
+Set all env vars in Vercel dashboard. Update `NEXTAUTH_URL` to your production URL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- **Browse** — filter by Tesla model + accessory category
+- **List** — create listing with up to 5 photos, daily rate, pickup city
+- **Contact** — secure email relay (neither side sees the other's real email)
+- **My Listings** — manage your active listings
+- **Auth** — Google OAuth, zero friction
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Category support
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Tow Hitch & Receivers
+- Hitch Bike Carriers
+- Roof Rack Systems
+- Cargo Boxes
+- Cargo Carriers
+- Frunk / Trunk Organizers
+- Camping & Overlanding
+- Other
+
+## Tesla model support
+
+Model S · Model 3 · Model X · Model Y · Cybertruck
