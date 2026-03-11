@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
@@ -16,8 +17,11 @@ export default function Navbar() {
   return (
     <nav className="border-b bg-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold tracking-tight flex-shrink-0">
-          <span style={{ color: '#E31937' }}>Tes</span>lend
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+          <Image src="/logo.svg" alt="Teslend" width={32} height={32} />
+          <span className="text-xl font-bold tracking-tight">
+            <span style={{ color: '#E31937' }}>Tes</span>lend
+          </span>
         </Link>
 
         {/* Desktop nav */}
