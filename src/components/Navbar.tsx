@@ -29,6 +29,9 @@ export default function Navbar() {
           <Link href="/browse" className="text-sm text-gray-600 hover:text-gray-900">
             Browse
           </Link>
+          <Link href="/how-it-works" className="text-sm text-gray-600 hover:text-gray-900">
+            How It Works
+          </Link>
           {session ? (
             <>
               <Link href="/listings/new" className="text-sm text-gray-600 hover:text-gray-900">
@@ -80,6 +83,9 @@ export default function Navbar() {
           <div className="flex flex-col px-4 py-3 gap-1">
             <Link href="/browse" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               Browse
+            </Link>
+            <Link href="/how-it-works" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+              How It Works
             </Link>
             <Link href="/listings/new" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               List Accessory
