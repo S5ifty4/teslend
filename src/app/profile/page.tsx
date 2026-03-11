@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import Image from 'next/image';
+import UserAvatar from '@/components/UserAvatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -101,15 +101,7 @@ export default function ProfilePage() {
         {/* Avatar */}
         <div className="flex items-center gap-4 mb-2">
           <div className="relative">
-            <div className="w-16 h-16 rounded-full bg-gray-100 overflow-hidden flex items-center justify-center">
-              {avatarUrl ? (
-                <Image src={avatarUrl} alt="Profile" fill className="object-cover" />
-              ) : (
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              )}
-            </div>
+            <UserAvatar src={avatarUrl} name={session?.user?.name} size={64} />
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
