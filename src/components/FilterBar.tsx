@@ -65,7 +65,13 @@ export default function FilterBar({ accessories = [] }: Props) {
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Item Type</span>
         <Select value={itemValue} onValueChange={(v) => updateItem(v ?? '')}>
           <SelectTrigger className="w-52">
-            <SelectValue placeholder="All Items" />
+            <SelectValue>
+              {itemValue === 'all' || !itemValue
+                ? 'All Items'
+                : itemValue === 'other'
+                ? 'Other / Aftermarket'
+                : (accessories.find((a) => a.slug === itemValue)?.name ?? itemValue)}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Items</SelectItem>

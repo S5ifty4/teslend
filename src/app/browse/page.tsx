@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { X } from 'lucide-react';
 import FilterBar from '@/components/FilterBar';
 import ListingGrid from '@/components/ListingGrid';
 import { Listing, MasterAccessory } from '@/lib/types';
@@ -84,17 +83,8 @@ export default async function BrowsePage({ searchParams }: Props) {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       {/* Listings section */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4">
         <h1 className="text-3xl font-bold">{title}</h1>
-        {activeMaster && (
-          <Link
-            href="/browse"
-            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 border border-gray-200 px-3 py-1.5 rounded-full"
-          >
-            <X className="w-3.5 h-3.5" />
-            Clear filter
-          </Link>
-        )}
       </div>
 
       <Suspense>
