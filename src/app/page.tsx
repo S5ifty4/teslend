@@ -39,7 +39,7 @@ export default async function HomePage() {
               </Button>
             </Link>
             <Link href="/listings/new">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
+              <Button size="lg" className="bg-white text-black border border-white hover:bg-gray-100 hover:text-black">
                 List an Accessory
               </Button>
             </Link>
