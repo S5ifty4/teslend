@@ -54,6 +54,8 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
   const { data, error } = await supabaseAdmin.from('listings').insert({
+    category: 'Other',
+    condition: 'Like New',
     ...body,
     user_id: user.id,
   }).select().single();

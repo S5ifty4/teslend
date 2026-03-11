@@ -11,17 +11,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ImageUpload from './ImageUpload';
-import { ACCESSORY_CATEGORIES } from '@/lib/constants';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 import { MasterAccessory } from '@/lib/types';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
   description: z.string().min(10, 'Please add a description'),
-  tesla_model: z.string().min(1, "Vehicle model required"),
-  category: z.enum(ACCESSORY_CATEGORIES),
+  tesla_model: z.string().min(1, 'Vehicle model required'),
   daily_price: z.number().min(1, 'Price must be at least $1'),
-  condition: z.enum(['Like New', 'Good', 'Fair']),
   city: z.string().min(2, 'City required'),
   zip_code: z.string().regex(/^\d{5}$/, 'Enter a valid 5-digit ZIP'),
   master_accessory_id: z.string().optional().nullable(),
@@ -43,7 +40,7 @@ export default function ListingForm() {
       .catch(() => {});
   }, []);
 
-  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
@@ -81,8 +78,8 @@ export default function ListingForm() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label>Tesla Model *</Label>
-          <Select onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}>
-            <SelectTrigger className="mt-1">
+          <Select onValueChange={(v: string) => setValue('tesla_model', v)}>
+            <SelectTrigger className="mt-1 w-full">
               <SelectValue placeholder="Select model" />
             </SelectTrigger>
             <SelectContent>
@@ -95,41 +92,9 @@ export default function ListingForm() {
         </div>
 
         <div>
-          <Label>Category *</Label>
-          <Select onValueChange={(v) => setValue('category', v as typeof ACCESSORY_CATEGORIES[number])}>
-            <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {ACCESSORY_CATEGORIES.map((c) => (
-                <SelectItem key={c} value={c}>{c}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.category && <p className="text-xs text-red-500 mt-1">{errors.category.message}</p>}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
           <Label>Daily Price ($) *</Label>
           <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="25" className="mt-1" />
           {errors.daily_price && <p className="text-xs text-red-500 mt-1">{errors.daily_price.message}</p>}
-        </div>
-
-        <div>
-          <Label>Condition *</Label>
-          <Select onValueChange={(v) => setValue('condition', v as 'Like New' | 'Good' | 'Fair')}>
-            <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select condition" />
-            </SelectTrigger>
-            <SelectContent>
-              {['Like New', 'Good', 'Fair'].map((c) => (
-                <SelectItem key={c} value={c}>{c}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.condition && <p className="text-xs text-red-500 mt-1">{errors.condition.message}</p>}
         </div>
       </div>
 
