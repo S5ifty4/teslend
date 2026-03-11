@@ -10,7 +10,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com', // Google profile photos
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'digitalassets-shop.tesla.com', // Tesla shop product images
       },
     ],
   },
