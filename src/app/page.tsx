@@ -1,24 +1,54 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import ListingGrid from '@/components/ListingGrid';
-import { ACCESSORY_CATEGORIES } from '@/lib/constants';
-import { Listing } from '@/lib/types';
+import MasterAccessoryCard from '@/components/MasterAccessoryCard';
+import { Listing, MasterAccessory } from '@/lib/types';
+import { supabaseAdmin } from '@/lib/supabase';
 
 async function getRecentListings(): Promise<Listing[]> {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/listings?limit=6`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return [];
-    return res.json();
+    const { data } = await supabaseAdmin
+      .from('listings')
+      .select('*, users(id, name, image)')
+      .eq('active', true)
+      .order('created_at', { ascending: false })
+      .limit(6);
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+async function getMasterAccessories(): Promise<MasterAccessory[]> {
+  try {
+    const { data } = await supabaseAdmin
+      .from('master_accessories')
+      .select('*')
+      .eq('active', true)
+      .order('name');
+    if (!data) return [];
+
+    const withCounts = await Promise.all(
+      data.map(async (acc) => {
+        const { count } = await supabaseAdmin
+          .from('listings')
+          .select('*', { count: 'exact', head: true })
+          .eq('master_accessory_id', acc.id)
+          .eq('active', true);
+        return { ...acc, listing_count: count ?? 0 };
+      })
+    );
+    return withCounts;
   } catch {
     return [];
   }
 }
 
 export default async function HomePage() {
-  const listings = await getRecentListings();
+  const [listings, accessories] = await Promise.all([
+    getRecentListings(),
+    getMasterAccessories(),
+  ]);
 
   return (
     <div>
@@ -56,22 +86,22 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold mb-8">Browse by Category</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {ACCESSORY_CATEGORIES.map((cat) => (
-            <Link key={cat} href={`/browse?category=${encodeURIComponent(cat)}`}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer text-center">
-                <CardContent className="p-6">
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg mx-auto mb-3" />
-                  <p className="text-sm font-medium leading-tight">{cat}</p>
-                </CardContent>
-              </Card>
+      {/* Shop by Item */}
+      {accessories.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Shop by Item</h2>
+            <Link href="/browse" className="text-sm font-medium" style={{ color: '#E31937' }}>
+              Browse all
             </Link>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
+            {accessories.map((acc) => (
+              <MasterAccessoryCard key={acc.id} accessory={acc} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* How it works */}
       <section className="bg-gray-50 py-16 px-4">
