@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import UserAvatar from '@/components/UserAvatar';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -33,17 +33,8 @@ export default function Navbar() {
               <Link href="/my-listings" className="text-sm text-gray-600 hover:text-gray-900">
                 My Listings
               </Link>
-              {/* Profile avatar → /profile */}
-              <Link href="/profile" className="flex items-center gap-2 hover:opacity-80">
-                <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
-                  {avatar ? (
-                    <Image src={avatar} alt={name ?? 'Profile'} width={32} height={32} className="object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm font-medium">
-                      {name?.[0]?.toUpperCase() ?? 'U'}
-                    </div>
-                  )}
-                </div>
+              <Link href="/profile" className="hover:opacity-80">
+                <UserAvatar src={avatar} name={name} size={32} />
               </Link>
               <Button variant="outline" size="sm" onClick={() => signOut()}>
                 Sign Out
@@ -61,13 +52,7 @@ export default function Navbar() {
           {session ? (
             <>
               <Link href="/profile" className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
-                  {avatar ? (
-                    <Image src={avatar} alt={name ?? 'Profile'} width={32} height={32} className="object-cover" />
-                  ) : (
-                    <span className="text-gray-500 text-sm font-medium">{name?.[0]?.toUpperCase() ?? 'U'}</span>
-                  )}
-                </div>
+                <UserAvatar src={avatar} name={name} size={32} />
               </Link>
               <button
                 onClick={() => setOpen(!open)}

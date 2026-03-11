@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import InquiryForm from '@/components/InquiryForm';
+import UserAvatar from '@/components/UserAvatar';
 import { Listing } from '@/lib/types';
 import { MapPin, Calendar } from 'lucide-react';
 
@@ -97,15 +98,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           {listing.users && (
             <Card>
               <CardContent className="p-4 flex items-center gap-3">
-                {listing.users.image ? (
-                  <Image src={listing.users.image} alt="" width={40} height={40} className="rounded-full" />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                )}
+                <UserAvatar src={listing.users.image} name={listing.users.name} size={40} />
                 <div>
                   <p className="font-medium text-sm">{listing.users.name ?? 'Tesla owner'}</p>
                   <p className="text-xs text-gray-400">Listing owner</p>
