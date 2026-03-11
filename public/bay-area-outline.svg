@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" fill="none">
+  <!--
+    Simplified Bay Area map — land filled, SF Bay cut out via evenodd.
+    Outer path = land boundary (clockwise)
+    Inner path = SF Bay water (counterclockwise = hole with evenodd)
+  -->
+  <path
+    fill-rule="evenodd"
+    d="
+      M 85,148
+      L 62,122
+      L 48,98
+      L 52,72
+      L 75,52
+      L 120,32
+      L 185,18
+      L 255,12
+      L 330,16
+      L 400,32
+      L 452,60
+      L 488,100
+      L 498,148
+      L 492,198
+      L 478,252
+      L 452,310
+      L 415,362
+      L 365,405
+      L 300,432
+      L 230,440
+      L 165,428
+      L 110,398
+      L 78,352
+      L 66,294
+      L 72,230
+      L 80,180
+      Z
+
+      M 98,158
+      L 135,138
+      L 178,124
+      L 225,118
+      L 270,118
+      L 308,128
+      L 332,150
+      L 342,182
+      L 335,220
+      L 318,256
+      L 292,288
+      L 258,308
+      L 222,314
+      L 190,300
+      L 168,272
+      L 155,240
+      L 148,208
+      L 138,182
+      Z
+    "
+    fill="white"
+    opacity="0.07"
+  />
+  <!--
+    Outer land stroke for clarity
+  -->
+  <path
+    d="
+      M 85,148
+      L 62,122
+      L 48,98
+      L 52,72
+      L 75,52
+      L 120,32
+      L 185,18
+      L 255,12
+      L 330,16
+      L 400,32
+      L 452,60
+      L 488,100
+      L 498,148
+      L 492,198
+      L 478,252
+      L 452,310
+      L 415,362
+      L 365,405
+      L 300,432
+      L 230,440
+      L 165,428
+      L 110,398
+      L 78,352
+      L 66,294
+      L 72,230
+      L 80,180
+      Z
+    "
+    stroke="white"
+    stroke-width="1.5"
+    opacity="0.18"
+    fill="none"
+  />
+  <!-- Bay water outline -->
+  <path
+    d="
+      M 98,158
+      L 135,138
+      L 178,124
+      L 225,118
+      L 270,118
+      L 308,128
+      L 332,150
+      L 342,182
+      L 335,220
+      L 318,256
+      L 292,288
+      L 258,308
+      L 222,314
+      L 190,300
+      L 168,272
+      L 155,240
+      L 148,208
+      L 138,182
+      Z
+    "
+    stroke="white"
+    stroke-width="1"
+    opacity="0.12"
+    fill="none"
+  />
+</svg>

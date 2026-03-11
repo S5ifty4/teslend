@@ -23,8 +23,17 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-black text-white py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative bg-black text-white py-24 px-4 overflow-hidden">
+        {/* Bay Area map outline — decorative background */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/bay-area-outline.svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+          style={{ opacity: 1 }}
+        />
+        <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">
             Rent Tesla accessories.{' '}
             <span style={{ color: '#E31937' }}>Bay Area first.</span>
