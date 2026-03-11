@@ -34,7 +34,6 @@ export default function ListingCard({ listing }: Props) {
         </div>
         <CardContent className="p-4">
           <p className="font-semibold text-gray-900 line-clamp-1">{listing.title}</p>
-          <p className="text-sm text-gray-500 mt-1 line-clamp-1">{listing.category}</p>
           <div className="flex items-center justify-between mt-3">
             <span className="font-bold text-lg" style={{ color: '#E31937' }}>
               ${listing.daily_price}/day
@@ -42,9 +41,6 @@ export default function ListingCard({ listing }: Props) {
             <span className="text-xs text-gray-400 flex items-center gap-1">
               <MapPin size={12} /> {listing.city}
             </span>
-          </div>
-          <div className="mt-2">
-            <Badge variant="outline" className="text-xs">{listing.condition}</Badge>
           </div>
         </CardContent>
       </Card>
