@@ -35,7 +35,7 @@ export default function ListingCard({ listing }: Props) {
         <CardContent className="p-4">
           <p className="font-semibold text-gray-900 line-clamp-1">{listing.title}</p>
           <p className="text-xs text-gray-500 mt-1">
-            {listing.master_accessory?.name ?? 'Other'}
+            {listing.master_accessories?.name ?? 'Other'}
           </p>
           <div className="flex items-center justify-between mt-3">
             <span className="font-bold text-lg" style={{ color: '#E31937' }}>

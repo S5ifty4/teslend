@@ -28,7 +28,7 @@ export interface Listing {
   created_at: string;
   updated_at: string;
   master_accessory_id?: string | null;
-  master_accessory?: Partial<MasterAccessory>;
+  master_accessories?: Partial<MasterAccessory> | null;
   users?: Partial<User>;
 }
 
