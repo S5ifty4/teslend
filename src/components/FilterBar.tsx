@@ -3,54 +3,82 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ACCESSORY_CATEGORIES } from '@/lib/constants';
+import { MasterAccessory } from '@/lib/types';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 
-export default function FilterBar() {
+interface Props {
+  accessories?: MasterAccessory[];
+}
+
+export default function FilterBar({ accessories = [] }: Props) {
   const router = useRouter();
   const params = useSearchParams();
-  const model = (params.get('model') ?? '') as string;
-  const category = (params.get('category') ?? '') as string;
+  const model = params.get('model') ?? '';
+  const master = params.get('master') ?? '';
+  const category = params.get('category') ?? '';
+
+  // Determine current item filter value for Select
+  const itemValue = master || (category === 'Other' ? 'other' : 'all');
+
   const { models } = useTeslaModels();
 
-  function update(key: string, value: string) {
+  function updateModel(value: string) {
     const p = new URLSearchParams(params.toString());
-    if (value && value !== 'all') {
-      p.set(key, value);
-    } else {
-      p.delete(key);
+    if (value && value !== 'all') p.set('model', value);
+    else p.delete('model');
+    router.push(`/browse?${p.toString()}`);
+  }
+
+  function updateItem(value: string) {
+    const p = new URLSearchParams(params.toString());
+    // Clear both master and category first
+    p.delete('master');
+    p.delete('category');
+    if (value === 'other') {
+      p.set('category', 'Other');
+    } else if (value && value !== 'all') {
+      p.set('master', value);
     }
     router.push(`/browse?${p.toString()}`);
   }
 
+  const hasFilters = !!(model || master || category);
+
   return (
-    <div className="flex flex-wrap gap-3 items-center">
-      <Select value={model || 'all'} onValueChange={(v) => update('model', v ?? '')}>
-        <SelectTrigger className="w-52 min-w-[180px]">
-          <SelectValue placeholder="All Models" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Models</SelectItem>
-          {models.map((m) => (
-            <SelectItem key={m} value={m}>{m}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="flex flex-wrap gap-4 items-end">
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Tesla Model</span>
+        <Select value={model || 'all'} onValueChange={(v) => updateModel(v ?? '')}>
+          <SelectTrigger className="w-52 min-w-[180px]">
+            <SelectValue placeholder="All Models" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Models</SelectItem>
+            {models.map((m) => (
+              <SelectItem key={m} value={m}>{m}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <Select value={category || 'all'} onValueChange={(v) => update('category', v ?? '')}>
-        <SelectTrigger className="w-52">
-          <SelectValue placeholder="All Categories" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Categories</SelectItem>
-          {ACCESSORY_CATEGORIES.map((c) => (
-            <SelectItem key={c} value={c}>{c}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Item Type</span>
+        <Select value={itemValue} onValueChange={(v) => updateItem(v ?? '')}>
+          <SelectTrigger className="w-52">
+            <SelectValue placeholder="All Items" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Items</SelectItem>
+            {accessories.map((acc) => (
+              <SelectItem key={acc.id} value={acc.slug}>{acc.name}</SelectItem>
+            ))}
+            <SelectItem value="other">Other / Aftermarket</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-      {(model || category) && (
-        <Button variant="ghost" size="sm" onClick={() => router.push('/browse')}>
+      {hasFilters && (
+        <Button variant="ghost" size="sm" className="mb-0.5" onClick={() => router.push('/browse')}>
           Clear filters
         </Button>
       )}

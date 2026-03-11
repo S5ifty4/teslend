@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { X } from 'lucide-react';
 import FilterBar from '@/components/FilterBar';
 import ListingGrid from '@/components/ListingGrid';
-import MasterAccessoryCard from '@/components/MasterAccessoryCard';
 import { Listing, MasterAccessory } from '@/lib/types';
 import { supabaseAdmin } from '@/lib/supabase';
 
@@ -84,18 +83,6 @@ export default async function BrowsePage({ searchParams }: Props) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      {/* Shop by Item section */}
-      {accessories.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Shop by Item</h2>
-          <div className="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
-            {accessories.map((acc) => (
-              <MasterAccessoryCard key={acc.id} accessory={acc} />
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Listings section */}
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-3xl font-bold">{title}</h1>
@@ -112,7 +99,7 @@ export default async function BrowsePage({ searchParams }: Props) {
 
       <Suspense>
         <div className="mb-8">
-          <FilterBar />
+          <FilterBar accessories={accessories} />
         </div>
       </Suspense>
 
