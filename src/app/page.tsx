@@ -105,22 +105,70 @@ export default async function HomePage() {
 
       {/* How it works */}
       <section className="bg-gray-50 py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-12">How it works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { step: '1', title: 'List', desc: 'Post your Tesla accessory with photos and your daily rate. Takes two minutes.' },
-              { step: '2', title: 'Browse', desc: 'Filter by Tesla model and accessory type to find exactly what you need.' },
-              { step: '3', title: 'Connect', desc: 'Send an inquiry with your dates. The owner gets your details and reaches out directly.' },
-            ].map(({ step, title, desc }) => (
-              <div key={step} className="text-center">
-                <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                  {step}
-                </div>
-                <h3 className="font-bold text-lg mb-2">{title}</h3>
-                <p className="text-gray-500 text-sm">{desc}</p>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-2xl font-bold">How it works</h2>
+            <Link href="/how-it-works" className="text-sm font-medium" style={{ color: '#E31937' }}>
+              Full details
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Renters */}
+            <div>
+              <h3 className="font-bold text-base mb-5 pb-3 border-b border-gray-200">Renting an accessory</h3>
+              <div className="space-y-4">
+                {[
+                  { n: '1', t: 'Browse by model or item type' },
+                  { n: '2', t: 'Send an inquiry with your dates' },
+                  { n: '3', t: 'Owner contacts you to arrange pickup' },
+                  { n: '4', t: 'Pick it up, use it, return it' },
+                ].map(({ n, t }) => (
+                  <div key={n} className="flex items-center gap-3">
+                    <div
+                      className="w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0"
+                      style={{ backgroundColor: '#E31937' }}
+                    >
+                      {n}
+                    </div>
+                    <span className="text-sm text-gray-700">{t}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+              <div className="mt-5">
+                <Link href="/browse">
+                  <Button size="sm" style={{ backgroundColor: '#E31937', color: 'white' }}>
+                    Browse Accessories
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Owners */}
+            <div>
+              <h3 className="font-bold text-base mb-5 pb-3 border-b border-gray-200">Listing an accessory</h3>
+              <div className="space-y-4">
+                {[
+                  { n: '1', t: 'Create a listing in under 2 minutes' },
+                  { n: '2', t: 'Get inquiries by email — no app required' },
+                  { n: '3', t: 'Set your own price, terms, and payment' },
+                  { n: '4', t: 'Manage or remove your listing any time' },
+                ].map(({ n, t }) => (
+                  <div key={n} className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                      {n}
+                    </div>
+                    <span className="text-sm text-gray-700">{t}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Link href="/listings/new">
+                  <Button size="sm" variant="outline">
+                    List an Accessory
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
