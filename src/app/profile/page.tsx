@@ -48,7 +48,11 @@ export default function ProfilePage() {
         .then((data: User) => {
           setProfile(data);
           setAvatarUrl(data.image ?? session?.user?.image ?? null);
-          setValue('name', data.name ?? session?.user?.name ?? '');
+          // Default to first name only from Google on first load
+          const existingName = data.name ?? '';
+          const googleName = session?.user?.name ?? '';
+          const defaultName = existingName || googleName.split(' ')[0];
+          setValue('name', defaultName);
           setValue('phone', data.phone ?? '');
           if (data.tesla_model) setValue('tesla_model', data.tesla_model);
           if (data.tesla_year) setValue('tesla_year', data.tesla_year);
@@ -124,7 +128,7 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <Label>Full name *</Label>
+          <Label>Name *</Label>
           <Input {...register('name')} className="mt-1" />
           {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>}
         </div>
@@ -132,7 +136,6 @@ export default function ProfilePage() {
         <div>
           <Label>Email</Label>
           <Input value={session?.user?.email ?? ''} disabled className="mt-1 bg-gray-50 text-gray-500" />
-          <p className="text-xs text-gray-400 mt-1">Managed by Google — cannot be changed here.</p>
         </div>
 
         <div>
@@ -142,7 +145,7 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <Label>Your Tesla <span className="text-gray-400 font-normal">(optional)</span></Label>
+          <Label>Primary Tesla Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
           <div className="grid grid-cols-2 gap-3 mt-1">
             <Select
               defaultValue={profile.tesla_model ?? undefined}
