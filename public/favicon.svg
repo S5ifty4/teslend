@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Black rounded background -->
+  <rect width="32" height="32" rx="6" fill="#111111"/>
+
+  <!-- Hitch receiver tube (horizontal bar, upper portion) -->
+  <rect x="3" y="11" width="17" height="7" rx="2" fill="#E31937"/>
+
+  <!-- Ball mount drop (shorter vertical) -->
+  <rect x="16" y="15" width="4" height="6" rx="1.5" fill="#C41530"/>
+
+  <!-- Hitch ball -->
+  <circle cx="18" cy="24" r="4" fill="#E31937"/>
+
+  <!-- Highlight on ball for depth -->
+  <circle cx="16.5" cy="22.5" r="1.2" fill="#FF4D63" opacity="0.4"/>
+
+  <!-- TL text inside receiver -->
+  <text
+    x="5"
+    y="19"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-weight="900"
+    font-size="8.5"
+    letter-spacing="0.3"
+    fill="white"
+  >TL</text>
+</svg>
