@@ -1,20 +1,24 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const [open, setOpen] = useState(false);
 
   return (
     <nav className="border-b bg-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold tracking-tight">
+        <Link href="/" className="text-xl font-bold tracking-tight flex-shrink-0">
           <span style={{ color: '#E31937' }}>Tes</span>lend
         </Link>
 
-        <div className="flex items-center gap-4">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-6">
           <Link href="/browse" className="text-sm text-gray-600 hover:text-gray-900">
             Browse
           </Link>
@@ -36,7 +40,63 @@ export default function Navbar() {
             </Button>
           )}
         </div>
+
+        {/* Mobile: sign in button (not signed in) or hamburger (signed in) */}
+        <div className="flex md:hidden items-center gap-2">
+          {!session ? (
+            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: '#E31937', color: 'white' }}>
+              Sign In
+            </Button>
+          ) : (
+            <button
+              onClick={() => setOpen(!open)}
+              className="p-2 text-gray-600 hover:text-gray-900"
+              aria-label="Menu"
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Mobile menu (signed in only) */}
+      {open && session && (
+        <div className="md:hidden border-t bg-white">
+          <div className="flex flex-col px-4 py-3 gap-1">
+            <Link
+              href="/browse"
+              className="py-2 text-sm text-gray-700 hover:text-gray-900"
+              onClick={() => setOpen(false)}
+            >
+              Browse
+            </Link>
+            <Link
+              href="/listings/new"
+              className="py-2 text-sm text-gray-700 hover:text-gray-900"
+              onClick={() => setOpen(false)}
+            >
+              List Accessory
+            </Link>
+            <Link
+              href="/my-listings"
+              className="py-2 text-sm text-gray-700 hover:text-gray-900"
+              onClick={() => setOpen(false)}
+            >
+              My Listings
+            </Link>
+            <div className="pt-2 border-t mt-1">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => { signOut(); setOpen(false); }}
+                className="w-full"
+              >
+                Sign Out
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

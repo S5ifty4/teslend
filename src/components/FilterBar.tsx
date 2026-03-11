@@ -24,7 +24,7 @@ export default function FilterBar() {
   return (
     <div className="flex flex-wrap gap-3 items-center">
       <Select value={model || 'all'} onValueChange={(v) => update('model', v ?? '')}>
-        <SelectTrigger className="w-40">
+        <SelectTrigger className="w-40 min-w-[140px]">
           <SelectValue placeholder="All Models" />
         </SelectTrigger>
         <SelectContent>
