@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ImageUpload from './ImageUpload';
 import { ACCESSORY_CATEGORIES } from '@/lib/constants';
 import { useTeslaModels } from '@/lib/useTeslaModels';
+import { MasterAccessory } from '@/lib/types';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
@@ -23,6 +24,7 @@ const schema = z.object({
   condition: z.enum(['Like New', 'Good', 'Fair']),
   city: z.string().min(2, 'City required'),
   zip_code: z.string().regex(/^\d{5}$/, 'Enter a valid 5-digit ZIP'),
+  master_accessory_id: z.string().optional().nullable(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -31,7 +33,15 @@ export default function ListingForm() {
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState('');
+  const [masterAccessories, setMasterAccessories] = useState<MasterAccessory[]>([]);
   const { models: teslaModels } = useTeslaModels();
+
+  useEffect(() => {
+    fetch('/api/master-accessories')
+      .then((r) => r.json())
+      .then((data) => setMasterAccessories(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -135,6 +145,26 @@ export default function ListingForm() {
           {errors.zip_code && <p className="text-xs text-red-500 mt-1">{errors.zip_code.message}</p>}
         </div>
       </div>
+
+      {masterAccessories.length > 0 && (
+        <div>
+          <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
+          <p className="text-xs text-gray-500 mt-0.5 mb-1">Link to a Tesla catalog item so renters can find it easier.</p>
+          <Select onValueChange={(v: string | null) => setValue('master_accessory_id', !v || v === 'none' ? null : v)}>
+            <SelectTrigger className="mt-1">
+              <SelectValue placeholder="Select a catalog item (optional)" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">None</SelectItem>
+              {masterAccessories.map((acc) => (
+                <SelectItem key={acc.id} value={acc.id}>
+                  {acc.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       <div>
         <Label>Photos (up to 5)</Label>
