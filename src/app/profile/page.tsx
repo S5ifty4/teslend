@@ -144,7 +144,7 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <Label>Primary Tesla Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
+          <Label>Primary Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
           <Select
             defaultValue={profile.tesla_model ?? undefined}
             onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}
