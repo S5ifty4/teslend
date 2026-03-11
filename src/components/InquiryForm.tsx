@@ -118,8 +118,8 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         Inquiring about <strong>{listingTitle}</strong>
       </p>
 
-      {/* Dates — stacked to avoid collision on mobile */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Dates — stacked vertically on all screen sizes */}
+      <div className="flex flex-col gap-3">
         <div>
           <Label className="text-sm">Start date *</Label>
           <Input
