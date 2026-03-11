@@ -78,7 +78,7 @@ export default function ListingForm() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label>Tesla Model *</Label>
-          <Select onValueChange={(v: string) => setValue('tesla_model', v)}>
+          <Select onValueChange={(v: string | null) => setValue('tesla_model', v ?? '')}>
             <SelectTrigger className="mt-1 w-full">
               <SelectValue placeholder="Select model" />
             </SelectTrigger>
