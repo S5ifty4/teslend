@@ -18,7 +18,7 @@ export default function Navbar() {
     <nav className="border-b bg-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo.svg" alt="Teslend" width={32} height={32} />
+          <Image src="/logo.png" alt="Teslend" width={32} height={32} />
           <span className="text-xl font-bold tracking-tight">
             <span style={{ color: '#E31937' }}>Tes</span>lend
           </span>
