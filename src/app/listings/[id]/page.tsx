@@ -12,7 +12,7 @@ async function getListing(id: string): Promise<Listing | null> {
   try {
     const { data } = await supabaseAdmin
       .from('listings')
-      .select('*, users(id, name, image)')
+      .select('*, users(id, name, image), master_accessories(name)')
       .eq('id', id)
       .eq('active', true)
       .single();
@@ -65,6 +65,9 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
               <Badge style={{ backgroundColor: '#E31937', color: 'white' }}>{listing.tesla_model}</Badge>
+              <Badge variant="outline" className="text-gray-600">
+                {listing.master_accessories?.name ?? 'Other'}
+              </Badge>
             </div>
             <h1 className="text-3xl font-bold mb-2">{listing.title}</h1>
             <div className="flex items-center gap-4 text-gray-500 text-sm mb-4">
