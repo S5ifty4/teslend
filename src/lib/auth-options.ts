@@ -9,9 +9,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
-  pages: {
-    newUser: '/onboarding',
-  },
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
@@ -21,28 +18,39 @@ export const authOptions: NextAuthOptions = {
       );
       return true;
     },
-    async session({ session }) {
-      if (session.user?.email) {
-        const { data } = await supabaseAdmin
-          .from('users')
-          .select('id, profile_completed, phone, tesla_model, tesla_year')
-          .eq('email', session.user.email)
-          .single();
-        if (data) {
-          const u = session.user as typeof session.user & {
-            id: string;
-            profile_completed: boolean;
-            phone: string | null;
-            tesla_model: string | null;
-            tesla_year: number | null;
-          };
-          u.id = data.id;
-          u.profile_completed = data.profile_completed ?? false;
-          u.phone = data.phone ?? null;
-          u.tesla_model = data.tesla_model ?? null;
-          u.tesla_year = data.tesla_year ?? null;
+    async jwt({ token, trigger }) {
+      // On sign-in or explicit update, fetch latest profile state
+      if (trigger === 'signIn' || trigger === 'update' || !('profile_completed' in token)) {
+        if (token.email) {
+          const { data } = await supabaseAdmin
+            .from('users')
+            .select('id, profile_completed, phone, tesla_model, tesla_year')
+            .eq('email', token.email as string)
+            .single();
+          if (data) {
+            token.id = data.id;
+            token.profile_completed = data.profile_completed ?? false;
+            token.phone = data.phone ?? null;
+            token.tesla_model = data.tesla_model ?? null;
+            token.tesla_year = data.tesla_year ?? null;
+          }
         }
       }
+      return token;
+    },
+    async session({ session, token }) {
+      const u = session.user as typeof session.user & {
+        id: string;
+        profile_completed: boolean;
+        phone: string | null;
+        tesla_model: string | null;
+        tesla_year: number | null;
+      };
+      u.id = token.id as string;
+      u.profile_completed = (token.profile_completed as boolean) ?? false;
+      u.phone = (token.phone as string | null) ?? null;
+      u.tesla_model = (token.tesla_model as string | null) ?? null;
+      u.tesla_year = (token.tesla_year as number | null) ?? null;
       return session;
     },
   },
