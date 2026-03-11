@@ -16,7 +16,7 @@ import { MasterAccessory } from '@/lib/types';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
-  description: z.string().min(10, 'Please add a description'),
+  description: z.string().min(3, 'Please add a description'),
   tesla_model: z.string().min(1, 'Vehicle model required'),
   daily_price: z.number().min(1, 'Price must be at least $1'),
   city: z.string().min(2, 'City required'),
