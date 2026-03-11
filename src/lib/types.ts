@@ -1,4 +1,4 @@
-import { TeslaModel, AccessoryCategory } from './constants';
+import { AccessoryCategory } from './constants';
 
 export interface User {
   id: string;
@@ -17,7 +17,7 @@ export interface Listing {
   user_id: string;
   title: string;
   description: string | null;
-  tesla_model: TeslaModel;
+  tesla_model: string;
   category: AccessoryCategory;
   daily_price: number;
   condition: 'Like New' | 'Good' | 'Fair';
@@ -47,7 +47,7 @@ export interface Inquiry {
 export interface ListingFormData {
   title: string;
   description: string;
-  tesla_model: TeslaModel;
+  tesla_model: string;
   category: AccessoryCategory;
   daily_price: number;
   condition: 'Like New' | 'Good' | 'Fair';

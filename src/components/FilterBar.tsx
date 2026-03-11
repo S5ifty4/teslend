@@ -3,13 +3,15 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { TESLA_MODELS, ACCESSORY_CATEGORIES } from '@/lib/constants';
+import { ACCESSORY_CATEGORIES } from '@/lib/constants';
+import { useTeslaModels } from '@/lib/useTeslaModels';
 
 export default function FilterBar() {
   const router = useRouter();
   const params = useSearchParams();
   const model = (params.get('model') ?? '') as string;
   const category = (params.get('category') ?? '') as string;
+  const { models } = useTeslaModels();
 
   function update(key: string, value: string) {
     const p = new URLSearchParams(params.toString());
@@ -24,12 +26,12 @@ export default function FilterBar() {
   return (
     <div className="flex flex-wrap gap-3 items-center">
       <Select value={model || 'all'} onValueChange={(v) => update('model', v ?? '')}>
-        <SelectTrigger className="w-40 min-w-[140px]">
+        <SelectTrigger className="w-52 min-w-[180px]">
           <SelectValue placeholder="All Models" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Models</SelectItem>
-          {TESLA_MODELS.map((m) => (
+          {models.map((m) => (
             <SelectItem key={m} value={m}>{m}</SelectItem>
           ))}
         </SelectContent>

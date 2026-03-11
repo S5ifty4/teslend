@@ -10,7 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { TESLA_MODELS, TESLA_YEARS } from '@/lib/constants';
+import { TESLA_YEARS } from '@/lib/constants';
+import { useTeslaModels } from '@/lib/useTeslaModels';
 
 const schema = z.object({
   start_date: z.string().min(1, 'Start date required'),
@@ -48,6 +49,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
   const [days, setDays] = useState(0);
 
   const today = new Date().toISOString().split('T')[0];
+  const { models: teslaModels } = useTeslaModels();
 
   const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -165,7 +167,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
               <SelectValue placeholder="Model" />
             </SelectTrigger>
             <SelectContent>
-              {TESLA_MODELS.map((m) => (
+              {teslaModels.map((m) => (
                 <SelectItem key={m} value={m}>{m}</SelectItem>
               ))}
             </SelectContent>

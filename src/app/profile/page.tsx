@@ -11,7 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { TESLA_MODELS, TESLA_YEARS } from '@/lib/constants';
+import { TESLA_YEARS } from '@/lib/constants';
+import { useTeslaModels } from '@/lib/useTeslaModels';
 import { Camera } from 'lucide-react';
 import { User } from '@/lib/types';
 
@@ -32,6 +33,7 @@ export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const { models: teslaModels } = useTeslaModels();
   const fileRef = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>({
@@ -158,7 +160,7 @@ export default function ProfilePage() {
                 <SelectValue placeholder="Model" />
               </SelectTrigger>
               <SelectContent>
-                {TESLA_MODELS.map((m) => (
+                {teslaModels.map((m) => (
                   <SelectItem key={m} value={m}>{m}</SelectItem>
                 ))}
               </SelectContent>

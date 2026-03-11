@@ -11,12 +11,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ImageUpload from './ImageUpload';
-import { TESLA_MODELS, ACCESSORY_CATEGORIES } from '@/lib/constants';
+import { ACCESSORY_CATEGORIES } from '@/lib/constants';
+import { useTeslaModels } from '@/lib/useTeslaModels';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
   description: z.string().min(10, 'Please add a description'),
-  tesla_model: z.enum(TESLA_MODELS),
+  tesla_model: z.string().min(1, "Vehicle model required"),
   category: z.enum(ACCESSORY_CATEGORIES),
   daily_price: z.number().min(1, 'Price must be at least $1'),
   condition: z.enum(['Like New', 'Good', 'Fair']),
@@ -30,6 +31,7 @@ export default function ListingForm() {
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState('');
+  const { models: teslaModels } = useTeslaModels();
 
   const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -69,12 +71,12 @@ export default function ListingForm() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label>Tesla Model *</Label>
-          <Select onValueChange={(v) => setValue('tesla_model', v as typeof TESLA_MODELS[number])}>
+          <Select onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}>
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="Select model" />
             </SelectTrigger>
             <SelectContent>
-              {TESLA_MODELS.map((m) => (
+              {teslaModels.map((m) => (
                 <SelectItem key={m} value={m}>{m}</SelectItem>
               ))}
             </SelectContent>
