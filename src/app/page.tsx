@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import ListingGrid from '@/components/ListingGrid';
-import { ACCESSORY_CATEGORIES, CATEGORY_ICONS } from '@/lib/constants';
+import { ACCESSORY_CATEGORIES } from '@/lib/constants';
 import { Listing } from '@/lib/types';
 
 async function getRecentListings(): Promise<Listing[]> {
@@ -30,9 +30,9 @@ export default async function HomePage() {
             <span style={{ color: '#E31937' }}>Bay Area first.</span>
           </h1>
           <p className="text-xl text-gray-400 mb-8">
-            Tow hitches, bike racks, roof systems — borrow from Tesla owners near you.
+            Tow hitches, bike racks, roof systems, cargo boxes — borrow from Tesla owners near you.
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
               <Button size="lg" style={{ backgroundColor: '#E31937', color: 'white' }}>
                 Browse Accessories
@@ -55,7 +55,7 @@ export default async function HomePage() {
             <Link key={cat} href={`/browse?category=${encodeURIComponent(cat)}`}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer text-center">
                 <CardContent className="p-6">
-                  <div className="text-3xl mb-2">{CATEGORY_ICONS[cat]}</div>
+                  <div className="w-10 h-10 bg-gray-100 rounded-lg mx-auto mb-3" />
                   <p className="text-sm font-medium leading-tight">{cat}</p>
                 </CardContent>
               </Card>
@@ -70,13 +70,15 @@ export default async function HomePage() {
           <h2 className="text-2xl font-bold mb-12">How it works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '1', title: 'List', desc: 'Post your Tesla accessory — hitch, rack, cargo box — with photos and your daily rate.', icon: '📸' },
-              { step: '2', title: 'Browse', desc: 'Filter by Tesla model and accessory type to find exactly what you need.', icon: '🔍' },
-              { step: '3', title: 'Connect', desc: 'Send a message through our secure relay. Neither side sees the other\'s real email.', icon: '✉️' },
-            ].map(({ step, title, desc, icon }) => (
+              { step: '1', title: 'List', desc: 'Post your Tesla accessory with photos and your daily rate. Takes two minutes.' },
+              { step: '2', title: 'Browse', desc: 'Filter by Tesla model and accessory type to find exactly what you need.' },
+              { step: '3', title: 'Connect', desc: 'Send an inquiry with your dates. The owner gets your details and reaches out directly.' },
+            ].map(({ step, title, desc }) => (
               <div key={step} className="text-center">
-                <div className="text-4xl mb-4">{icon}</div>
-                <h3 className="font-bold text-lg mb-2">{step}. {title}</h3>
+                <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  {step}
+                </div>
+                <h3 className="font-bold text-lg mb-2">{title}</h3>
                 <p className="text-gray-500 text-sm">{desc}</p>
               </div>
             ))}
@@ -90,7 +92,7 @@ export default async function HomePage() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Recent Listings</h2>
             <Link href="/browse" className="text-sm font-medium" style={{ color: '#E31937' }}>
-              View all →
+              View all
             </Link>
           </div>
           <ListingGrid listings={listings} />

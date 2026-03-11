@@ -9,6 +9,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+  pages: {
+    newUser: '/onboarding',
+  },
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
@@ -22,11 +25,22 @@ export const authOptions: NextAuthOptions = {
       if (session.user?.email) {
         const { data } = await supabaseAdmin
           .from('users')
-          .select('id')
+          .select('id, profile_completed, phone, tesla_model, tesla_year')
           .eq('email', session.user.email)
           .single();
         if (data) {
-          (session.user as typeof session.user & { id: string }).id = data.id;
+          const u = session.user as typeof session.user & {
+            id: string;
+            profile_completed: boolean;
+            phone: string | null;
+            tesla_model: string | null;
+            tesla_year: number | null;
+          };
+          u.id = data.id;
+          u.profile_completed = data.profile_completed ?? false;
+          u.phone = data.phone ?? null;
+          u.tesla_model = data.tesla_model ?? null;
+          u.tesla_year = data.tesla_year ?? null;
         }
       }
       return session;
