@@ -50,7 +50,9 @@ export default function FilterBar({ accessories = [] }: Props) {
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Tesla Model</span>
         <Select value={model || 'all'} onValueChange={(v) => updateModel(v ?? '')}>
           <SelectTrigger className="w-52 min-w-[180px]">
-            <SelectValue placeholder="All Models" />
+            <SelectValue>
+              {model || 'All Models'}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Models</SelectItem>

@@ -70,21 +70,12 @@ export default async function BrowsePage({ searchParams }: Props) {
     getMasterAccessories(),
   ]);
 
-  // Find active master accessory name for filter label
   const activeMaster = master ? accessories.find((a) => a.slug === master) : null;
-
-  const filterParts = [model, category].filter(Boolean);
-  const title = activeMaster
-    ? activeMaster.name
-    : filterParts.length
-    ? filterParts.join(' · ')
-    : 'All Accessories';
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      {/* Listings section */}
       <div className="mb-4">
-        <h1 className="text-3xl font-bold">{title}</h1>
+        <h1 className="text-3xl font-bold">Browse Accessories</h1>
       </div>
 
       <Suspense>
