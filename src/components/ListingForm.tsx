@@ -31,6 +31,7 @@ export default function ListingForm() {
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [masterAccessories, setMasterAccessories] = useState<MasterAccessory[]>([]);
+  const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
   const { models: teslaModels } = useTeslaModels();
 
   useEffect(() => {
@@ -115,9 +116,19 @@ export default function ListingForm() {
         <div>
           <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
           <p className="text-xs text-gray-500 mt-0.5 mb-1">Link to a Tesla catalog item so renters can find it easier.</p>
-          <Select onValueChange={(v: string | null) => setValue('master_accessory_id', !v || v === 'none' ? null : v)}>
+          <Select
+            onValueChange={(v: string | null) => {
+              const id = !v || v === 'none' ? null : v;
+              setSelectedMasterId(id);
+              setValue('master_accessory_id', id);
+            }}
+          >
             <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select a catalog item (optional)" />
+              <span className={selectedMasterId ? 'text-gray-900' : 'text-gray-400'}>
+                {selectedMasterId
+                  ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
+                  : 'Select a catalog item (optional)'}
+              </span>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">None</SelectItem>
