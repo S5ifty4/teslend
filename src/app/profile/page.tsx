@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { TESLA_YEARS } from '@/lib/constants';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 import { Camera } from 'lucide-react';
 import { User } from '@/lib/types';
@@ -146,35 +145,19 @@ export default function ProfilePage() {
 
         <div>
           <Label>Primary Tesla Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
-          <div className="grid grid-cols-2 gap-3 mt-1">
-            <Select
-              defaultValue={profile.tesla_model ?? undefined}
-              onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Model" />
-              </SelectTrigger>
-              <SelectContent>
-                {teslaModels.map((m) => (
-                  <SelectItem key={m} value={m}>{m}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select
-              defaultValue={profile.tesla_year ? String(profile.tesla_year) : undefined}
-              onValueChange={(v) => setValue('tesla_year', parseInt((v ?? '0') as string))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Year" />
-              </SelectTrigger>
-              <SelectContent>
-                {TESLA_YEARS.map((y) => (
-                  <SelectItem key={y} value={String(y)}>{y}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <Select
+            defaultValue={profile.tesla_model ?? undefined}
+            onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}
+          >
+            <SelectTrigger className="w-full mt-1">
+              <SelectValue placeholder="Select your model" />
+            </SelectTrigger>
+            <SelectContent>
+              {teslaModels.map((m) => (
+                <SelectItem key={m} value={m}>{m}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {error && <p className="text-sm text-red-500">{error}</p>}
