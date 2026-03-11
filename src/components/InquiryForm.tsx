@@ -10,14 +10,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { TESLA_YEARS } from '@/lib/constants';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 
 const schema = z.object({
   start_date: z.string().min(1, 'Start date required'),
   end_date: z.string().min(1, 'End date required'),
   tesla_model: z.string().min(1, 'Vehicle model required'),
-  tesla_year: z.number().optional(),
   phone: z.string().min(7, 'Phone number required'),
   note: z.string().optional(),
 }).refine((d) => new Date(d.end_date) > new Date(d.start_date), {
@@ -32,7 +30,6 @@ interface SessionUser {
   email?: string | null;
   phone?: string | null;
   tesla_model?: string | null;
-  tesla_year?: number | null;
 }
 
 interface Props {
@@ -56,7 +53,6 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
     defaultValues: {
       phone: user?.phone ?? '',
       tesla_model: user?.tesla_model ?? '',
-      tesla_year: user?.tesla_year ?? undefined,
     },
   });
 
@@ -95,7 +91,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         </div>
         <p className="font-semibold text-gray-900">Inquiry sent</p>
         <p className="text-sm text-gray-500 mt-1">
-          The owner will review your request and reach out to you directly. Check your email for a confirmation.
+          The owner will review your request and reach out to you directly.
         </p>
       </div>
     );
@@ -122,25 +118,26 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         Inquiring about <strong>{listingTitle}</strong>
       </p>
 
+      {/* Dates — stacked to avoid collision on mobile */}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <Label>Start date *</Label>
+          <Label className="text-sm">Start date *</Label>
           <Input
             {...register('start_date')}
             type="date"
             min={today}
-            className="mt-1"
+            className="mt-1 text-sm"
             onChange={(e) => { register('start_date').onChange(e); updateDays(e.target.value, endDate); }}
           />
           {errors.start_date && <p className="text-xs text-red-500 mt-1">{errors.start_date.message}</p>}
         </div>
         <div>
-          <Label>End date *</Label>
+          <Label className="text-sm">End date *</Label>
           <Input
             {...register('end_date')}
             type="date"
             min={startDate || today}
-            className="mt-1"
+            className="mt-1 text-sm"
             onChange={(e) => { register('end_date').onChange(e); updateDays(startDate, e.target.value); }}
           />
           {errors.end_date && <p className="text-xs text-red-500 mt-1">{errors.end_date.message}</p>}
@@ -156,40 +153,26 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         </div>
       )}
 
+      {/* Vehicle — full width, no Year */}
       <div>
-        <Label>Your Tesla *</Label>
-        <div className="grid grid-cols-2 gap-3 mt-1">
-          <Select
-            defaultValue={user?.tesla_model ?? undefined}
-            onValueChange={(v) => setValue('tesla_model', v ?? '')}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Model" />
-            </SelectTrigger>
-            <SelectContent>
-              {teslaModels.map((m) => (
-                <SelectItem key={m} value={m}>{m}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            defaultValue={user?.tesla_year ? String(user.tesla_year) : undefined}
-            onValueChange={(v) => setValue('tesla_year', parseInt(v ?? '0'))}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Year" />
-            </SelectTrigger>
-            <SelectContent>
-              {TESLA_YEARS.map((y) => (
-                <SelectItem key={y} value={String(y)}>{y}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <Label>Your Vehicle *</Label>
+        <Select
+          defaultValue={user?.tesla_model ?? undefined}
+          onValueChange={(v: string | null) => setValue('tesla_model', v ?? '')}
+        >
+          <SelectTrigger className="mt-1 w-full">
+            <SelectValue placeholder="Select your model" />
+          </SelectTrigger>
+          <SelectContent>
+            {teslaModels.map((m) => (
+              <SelectItem key={m} value={m}>{m}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {errors.tesla_model && <p className="text-xs text-red-500 mt-1">{errors.tesla_model.message}</p>}
       </div>
 
+      {/* Phone — pre-filled from profile */}
       <div>
         <Label>Phone number *</Label>
         <Input
@@ -221,7 +204,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         className="w-full text-white"
         style={{ backgroundColor: '#E31937' }}
       >
-        {isSubmitting ? 'Sending inquiry...' : 'Send Inquiry'}
+        {isSubmitting ? 'Sending...' : 'Send Inquiry'}
       </Button>
     </form>
   );

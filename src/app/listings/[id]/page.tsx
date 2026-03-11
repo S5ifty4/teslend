@@ -6,14 +6,17 @@ import InquiryForm from '@/components/InquiryForm';
 import UserAvatar from '@/components/UserAvatar';
 import { Listing } from '@/lib/types';
 import { MapPin, Calendar } from 'lucide-react';
+import { supabaseAdmin } from '@/lib/supabase';
 
 async function getListing(id: string): Promise<Listing | null> {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/listings/${id}`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return null;
-    return res.json();
+    const { data } = await supabaseAdmin
+      .from('listings')
+      .select('*, users(id, name, image)')
+      .eq('id', id)
+      .eq('active', true)
+      .single();
+    return data ?? null;
   } catch {
     return null;
   }
@@ -62,8 +65,6 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
               <Badge style={{ backgroundColor: '#E31937', color: 'white' }}>{listing.tesla_model}</Badge>
-              <Badge variant="outline">{listing.category}</Badge>
-              <Badge variant="outline">{listing.condition}</Badge>
             </div>
             <h1 className="text-3xl font-bold mb-2">{listing.title}</h1>
             <div className="flex items-center gap-4 text-gray-500 text-sm mb-4">
@@ -86,7 +87,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 ${listing.daily_price}
                 <span className="text-lg font-normal text-gray-400">/day</span>
               </div>
-              <p className="text-sm text-gray-500 mb-6">{listing.city} · {listing.condition}</p>
+              <p className="text-sm text-gray-500 mb-6">{listing.city}</p>
               <InquiryForm
                 listingId={listing.id}
                 listingTitle={listing.title}
