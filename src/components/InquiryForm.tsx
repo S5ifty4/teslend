@@ -118,26 +118,26 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         Inquiring about <strong>{listingTitle}</strong>
       </p>
 
-      {/* Dates — stacked vertically on all screen sizes */}
-      <div className="flex flex-col gap-3">
-        <div>
-          <Label className="text-sm">Start date *</Label>
-          <Input
+      {/* Dates — side by side, min-w-0 prevents overflow */}
+      <div className="grid grid-cols-2 gap-2">
+        <div className="min-w-0">
+          <Label className="text-sm">Start *</Label>
+          <input
             {...register('start_date')}
             type="date"
             min={today}
-            className="mt-1 text-sm"
+            className="mt-1 w-full text-sm border border-gray-200 rounded-md px-2 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
             onChange={(e) => { register('start_date').onChange(e); updateDays(e.target.value, endDate); }}
           />
           {errors.start_date && <p className="text-xs text-red-500 mt-1">{errors.start_date.message}</p>}
         </div>
-        <div>
-          <Label className="text-sm">End date *</Label>
-          <Input
+        <div className="min-w-0">
+          <Label className="text-sm">End *</Label>
+          <input
             {...register('end_date')}
             type="date"
             min={startDate || today}
-            className="mt-1 text-sm"
+            className="mt-1 w-full text-sm border border-gray-200 rounded-md px-2 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
             onChange={(e) => { register('end_date').onChange(e); updateDays(startDate, e.target.value); }}
           />
           {errors.end_date && <p className="text-xs text-red-500 mt-1">{errors.end_date.message}</p>}
