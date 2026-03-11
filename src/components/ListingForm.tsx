@@ -75,7 +75,7 @@ export default function ListingForm() {
         {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description.message}</p>}
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>Tesla Model *</Label>
           <Select onValueChange={(v: string | null) => setValue('tesla_model', v ?? '')}>
@@ -91,20 +91,20 @@ export default function ListingForm() {
           {errors.tesla_model && <p className="text-xs text-red-500 mt-1">{errors.tesla_model.message}</p>}
         </div>
 
-        <div className="col-span-1">
+        <div className="col-span-2">
           <Label>Price/day ($) *</Label>
           <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="25" className="mt-1" />
           {errors.daily_price && <p className="text-xs text-red-500 mt-1">{errors.daily_price.message}</p>}
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>City *</Label>
           <Input {...register('city')} placeholder="San Jose" className="mt-1" />
           {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city.message}</p>}
         </div>
-        <div className="col-span-1">
+        <div className="col-span-2">
           <Label>ZIP *</Label>
           <Input {...register('zip_code')} placeholder="95110" maxLength={5} className="mt-1" />
           {errors.zip_code && <p className="text-xs text-red-500 mt-1">{errors.zip_code.message}</p>}
