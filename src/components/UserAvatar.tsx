@@ -12,10 +12,6 @@ interface Props {
 
 export default function UserAvatar({ src, name, size = 32, className = '' }: Props) {
   const [imgError, setImgError] = useState(false);
-  const initials = name
-    ? name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()
-    : '?';
-
   if (src && !imgError) {
     return (
       <Image
@@ -30,19 +26,21 @@ export default function UserAvatar({ src, name, size = 32, className = '' }: Pro
     );
   }
 
-  // Fallback: initials avatar
+  // Fallback: silhouette avatar
   return (
     <div
-      className={`rounded-full flex items-center justify-center font-semibold text-white select-none ${className}`}
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: '#E31937',
-        fontSize: size * 0.38,
-        flexShrink: 0,
-      }}
+      className={`rounded-full flex items-center justify-center bg-gray-200 overflow-hidden select-none flex-shrink-0 ${className}`}
+      style={{ width: size, height: size }}
     >
-      {initials}
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ width: size * 0.65, height: size * 0.65 }}
+      >
+        <circle cx="12" cy="8" r="4" fill="#9CA3AF" />
+        <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" fill="#9CA3AF" />
+      </svg>
     </div>
   );
 }
