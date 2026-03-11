@@ -119,13 +119,7 @@ export default function OnboardingPage() {
             {isSubmitting ? 'Saving...' : 'Continue'}
           </Button>
 
-          <button
-            type="button"
-            onClick={() => router.push('/')}
-            className="w-full text-sm text-gray-400 hover:text-gray-600 text-center"
-          >
-            Skip for now
-          </button>
+
         </form>
       </div>
     </div>
