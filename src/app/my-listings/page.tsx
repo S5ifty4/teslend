@@ -14,6 +14,8 @@ export default function MyListingsPage() {
   const { data: session, status } = useSession();
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -36,9 +38,11 @@ export default function MyListingsPage() {
   }
 
   async function deactivate(id: string) {
-    if (!confirm('Remove this listing?')) return;
+    setDeletingId(id);
+    setConfirming(null);
     await fetch(`/api/listings/${id}`, { method: 'DELETE' });
     setListings((prev) => prev.filter((l) => l.id !== id));
+    setDeletingId(null);
   }
 
   return (
@@ -95,11 +99,32 @@ export default function MyListingsPage() {
                   <Link href={`/listings/${listing.id}/edit`}>
                     <Button variant="outline" size="sm"><Pencil size={14} /></Button>
                   </Link>
-                  <Button variant="outline" size="sm" onClick={() => deactivate(listing.id)}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setConfirming(listing.id)}
+                    disabled={deletingId === listing.id}
+                  >
                     <Trash2 size={14} />
                   </Button>
                 </div>
               </CardContent>
+              {confirming === listing.id && (
+                <div className="px-4 pb-4 flex items-center justify-between gap-3 border-t pt-3">
+                  <p className="text-sm text-gray-600">Remove this listing? This can&apos;t be undone.</p>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setConfirming(null)}>Cancel</Button>
+                    <Button
+                      size="sm"
+                      onClick={() => deactivate(listing.id)}
+                      disabled={deletingId === listing.id}
+                      style={{ backgroundColor: '#E31937', color: 'white' }}
+                    >
+                      {deletingId === listing.id ? 'Removing...' : 'Yes, Remove'}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </Card>
           ))}
         </div>
