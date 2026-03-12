@@ -3,15 +3,28 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { supabaseAdmin } from '@/lib/supabase';
 import { Resend } from 'resend';
+import { sanitizeForEmail, stripHtml } from '@/lib/sanitize';
+import { rateLimit, getClientIp } from '@/lib/rate-limit';
 
 const resend = new Resend(process.env.RESEND_API_KEY ?? 'placeholder');
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 inquiries per IP per 10 minutes
+  const ip = getClientIp(req);
+  if (!rateLimit(ip, 'inquiries', 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: 'Too many requests. Please wait before submitting another inquiry.' }, { status: 429 });
+  }
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
   const { listing_id, start_date, end_date, tesla_model, tesla_year, phone, note } = body;
+
+  // Sanitize all user-supplied text fields
+  const safeNote = note ? sanitizeForEmail(note) : null;
+  const safeTeslaModel = stripHtml(tesla_model);
+  const safeTeslaYear = tesla_year ? stripHtml(String(tesla_year)) : null;
 
   if (!listing_id || !start_date || !end_date || !tesla_model || !phone) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -90,9 +103,9 @@ export async function POST(req: NextRequest) {
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 6px 0; color: #666; width: 140px;">Dates</td><td style="padding: 6px 0; font-weight: 600;">${startFormatted} to ${endFormatted} (${days} day${days !== 1 ? 's' : ''})</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total}</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Vehicle</td><td style="padding: 6px 0;">${safeTeslaModel}${safeTeslaYear ? ` (${safeTeslaYear})` : ''}</td></tr>
           </table>
-          ${note ? `<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #ddd;"><p style="margin: 0; color: #666; font-size: 13px;">Note from requester:</p><p style="margin: 8px 0 0;">${note}</p></div>` : ''}
+          ${safeNote ? `<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #ddd;"><p style="margin: 0; color: #666; font-size: 13px;">Note from requester:</p><p style="margin: 8px 0 0;">${safeNote}</p></div>` : ''}
         </div>
 
         <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; margin: 24px 0;">
@@ -135,7 +148,7 @@ export async function POST(req: NextRequest) {
             <tr><td style="padding: 6px 0; color: #666;">Dates</td><td style="padding: 6px 0;">${startFormatted} to ${endFormatted}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Duration</td><td style="padding: 6px 0;">${days} day${days !== 1 ? 's' : ''}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total} at $${listing.daily_price}/day</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Your Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Your Vehicle</td><td style="padding: 6px 0;">${safeTeslaModel}${safeTeslaYear ? ` (${safeTeslaYear})` : ''}</td></tr>
           </table>
         </div>
 
