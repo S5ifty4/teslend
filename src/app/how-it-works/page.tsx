@@ -74,7 +74,7 @@ export default function HowItWorksPage() {
             <div key={n} className="flex gap-4">
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 mt-0.5"
-                style={{ backgroundColor: '#3E6AE1' }}
+                style={{ backgroundColor: '#E31937' }}
               >
                 {n}
               </div>
@@ -156,7 +156,7 @@ export default function HowItWorksPage() {
         <Link
           href="/browse"
           className="px-6 py-3 rounded-lg text-white text-sm font-semibold"
-          style={{ backgroundColor: '#3E6AE1' }}
+          style={{ backgroundColor: '#E31937' }}
         >
           Browse Accessories
         </Link>
