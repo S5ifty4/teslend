@@ -32,6 +32,7 @@ export default function ListingForm() {
   const [error, setError] = useState('');
   const [masterAccessories, setMasterAccessories] = useState<MasterAccessory[]>([]);
   const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>('');
   const { models: teslaModels } = useTeslaModels();
 
   useEffect(() => {
@@ -40,6 +41,13 @@ export default function ListingForm() {
       .then((data) => setMasterAccessories(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, []);
+
+  // Filter catalog items to only those compatible with the selected model
+  const compatibleItems = selectedModel
+    ? masterAccessories.filter(
+        (acc) => !acc.compatibility?.length || acc.compatibility.includes(selectedModel)
+      )
+    : masterAccessories;
 
   const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -79,7 +87,19 @@ export default function ListingForm() {
       <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>Tesla Model *</Label>
-          <Select onValueChange={(v: string | null) => setValue('tesla_model', v ?? '')}>
+          <Select onValueChange={(v: string | null) => {
+            const model = v ?? '';
+            setSelectedModel(model);
+            setValue('tesla_model', model);
+            // Clear catalog item if no longer compatible with new model
+            if (selectedMasterId) {
+              const acc = masterAccessories.find((a) => a.id === selectedMasterId);
+              if (acc && acc.compatibility?.length && !acc.compatibility.includes(model)) {
+                setSelectedMasterId(null);
+                setValue('master_accessory_id', null);
+              }
+            }
+          }}>
             <SelectTrigger className="mt-1 w-full">
               <SelectValue placeholder="Select model" />
             </SelectTrigger>
@@ -112,35 +132,38 @@ export default function ListingForm() {
         </div>
       </div>
 
-      {masterAccessories.length > 0 && (
-        <div>
-          <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
-          <p className="text-xs text-gray-500 mt-0.5 mb-1">Link to a Tesla catalog item so renters can find it easier.</p>
-          <Select
-            onValueChange={(v: string | null) => {
-              const id = !v || v === 'none' ? null : v;
-              setSelectedMasterId(id);
-              setValue('master_accessory_id', id);
-            }}
-          >
-            <SelectTrigger className="mt-1">
-              <span className={selectedMasterId ? 'text-gray-900' : 'text-gray-400'}>
-                {selectedMasterId
-                  ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
-                  : 'Select a catalog item (optional)'}
-              </span>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="none">None</SelectItem>
-              {masterAccessories.map((acc) => (
-                <SelectItem key={acc.id} value={acc.id}>
-                  {acc.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
+      <div>
+        <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
+        <p className="text-xs text-gray-500 mt-0.5 mb-1">
+          {selectedModel
+            ? `Showing items compatible with ${selectedModel}`
+            : 'Select a model above to filter compatible items'}
+        </p>
+        <Select
+          value={selectedMasterId ?? 'none'}
+          onValueChange={(v: string | null) => {
+            const id = !v || v === 'none' ? null : v;
+            setSelectedMasterId(id);
+            setValue('master_accessory_id', id);
+          }}
+        >
+          <SelectTrigger className="mt-1">
+            <SelectValue>
+              {selectedMasterId
+                ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
+                : 'Select a catalog item (optional)'}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="none">None</SelectItem>
+            {compatibleItems.map((acc) => (
+              <SelectItem key={acc.id} value={acc.id}>
+                {acc.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       <div>
         <Label>Photos (up to 5)</Label>

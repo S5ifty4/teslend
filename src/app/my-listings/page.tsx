@@ -87,10 +87,9 @@ export default function MyListingsPage() {
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold truncate">{listing.title}</p>
                   <div className="flex gap-2 mt-1 flex-wrap">
-                    <Badge style={{ backgroundColor: '#E31937', color: 'white' }} className="text-xs">{listing.tesla_model}</Badge>
-                    <Badge variant="outline" className="text-xs">{listing.category}</Badge>
+                    <Badge style={{ backgroundColor: '#475569', color: 'white' }} className="text-xs">{listing.tesla_model}</Badge>
                   </div>
-                  <p className="text-sm font-medium mt-1" style={{ color: '#E31937' }}>${listing.daily_price}/day</p>
+                  <p className="text-sm font-semibold mt-1 text-gray-900">${listing.daily_price}/day</p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
                   <Link href={`/listings/${listing.id}`}>

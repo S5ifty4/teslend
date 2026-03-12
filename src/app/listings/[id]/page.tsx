@@ -12,7 +12,7 @@ async function getListing(id: string): Promise<Listing | null> {
   try {
     const { data } = await supabaseAdmin
       .from('listings')
-      .select('*, users(id, name, image), master_accessories(name)')
+      .select('*, users(id, name, image), master_accessories(name, compatibility)')
       .eq('id', id)
       .eq('active', true)
       .single();
@@ -64,9 +64,15 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
-              <Badge style={{ backgroundColor: '#475569', color: 'white' }}>{listing.tesla_model}</Badge>
+              {/* Show all compatible models if available, else just the lister's model */}
+              {(listing.master_accessories as { name?: string; compatibility?: string[] } | null)?.compatibility?.length
+                ? (listing.master_accessories as { compatibility: string[] }).compatibility.map((m) => (
+                    <Badge key={m} style={{ backgroundColor: '#475569', color: 'white' }}>{m}</Badge>
+                  ))
+                : <Badge style={{ backgroundColor: '#475569', color: 'white' }}>{listing.tesla_model}</Badge>
+              }
               <Badge variant="outline" className="text-gray-600">
-                {listing.master_accessories?.name ?? 'Other'}
+                {(listing.master_accessories as { name?: string } | null)?.name ?? 'Other'}
               </Badge>
             </div>
             <h1 className="text-3xl font-bold mb-2">{listing.title}</h1>
