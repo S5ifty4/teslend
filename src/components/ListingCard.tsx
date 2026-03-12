@@ -27,7 +27,7 @@ export default function ListingCard({ listing }: Props) {
           )}
           <Badge
             className="absolute top-2 right-2 text-white"
-            style={{ backgroundColor: '#E31937' }}
+            style={{ backgroundColor: '#475569' }}
           >
             {listing.tesla_model}
           </Badge>

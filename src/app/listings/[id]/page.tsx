@@ -64,7 +64,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
-              <Badge style={{ backgroundColor: '#E31937', color: 'white' }}>{listing.tesla_model}</Badge>
+              <Badge style={{ backgroundColor: '#475569', color: 'white' }}>{listing.tesla_model}</Badge>
               <Badge variant="outline" className="text-gray-600">
                 {listing.master_accessories?.name ?? 'Other'}
               </Badge>
