@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +7,7 @@ import UserAvatar from '@/components/UserAvatar';
 import { Listing } from '@/lib/types';
 import { MapPin, Calendar } from 'lucide-react';
 import { supabaseAdmin } from '@/lib/supabase';
+import ImageGallery from '@/components/ImageGallery';
 
 async function getListing(id: string): Promise<Listing | null> {
   try {
@@ -95,33 +95,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Left: images + details */}
         <div className="lg:col-span-2 space-y-6">
-          {images.length > 0 ? (
-            <div className="space-y-3">
-              <div className="aspect-[4/3] relative rounded-xl overflow-hidden bg-gray-100">
-                <Image src={images[0]} alt={listing.title} fill className="object-cover" />
-              </div>
-              {images.length > 1 && (
-                <div className="flex gap-2">
-                  {images.slice(1).map((url, i) => (
-                    <div key={i} className="w-20 h-20 relative rounded overflow-hidden bg-gray-100">
-                      <Image src={url} alt="" fill className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="aspect-[4/3] bg-gray-100 rounded-xl flex items-center justify-center">
-              <div className="text-center text-gray-400">
-                <div className="w-16 h-16 mx-auto mb-2 border-2 border-gray-300 rounded-lg flex items-center justify-center">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <p className="text-sm">No photos</p>
-              </div>
-            </div>
-          )}
+          <ImageGallery images={images} alt={listing.title} />
 
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
