@@ -171,7 +171,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
 
       {/* Phone — pre-filled from profile */}
       <div>
-        <Label>Phone number *</Label>
+        <Label>Phone Number *</Label>
         <Input
           {...register('phone')}
           type="tel"

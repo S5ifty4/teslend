@@ -152,7 +152,7 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <Label>Phone number <span className="text-gray-400 font-normal">(optional)</span></Label>
+          <Label>Phone Number <span className="text-gray-400 font-normal">(optional)</span></Label>
           <Input
             type="tel"
             value={phoneDisplay}
