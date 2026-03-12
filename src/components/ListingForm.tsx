@@ -74,7 +74,7 @@ export default function ListingForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl">
       <div>
         <Label>Title *</Label>
-        <Input {...register('title')} placeholder="e.g. Tesla Model Y Thule Hitch Bike Rack" className="mt-1" />
+        <Input {...register('title')} placeholder="Tesla Model Y Hitch Rack" className="mt-1" />
         {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title.message}</p>}
       </div>
 
@@ -114,7 +114,7 @@ export default function ListingForm() {
 
         <div className="col-span-2">
           <Label>Price/day ($) *</Label>
-          <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="25" className="mt-1" />
+          <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="" className="mt-1" />
           {errors.daily_price && <p className="text-xs text-red-500 mt-1">{errors.daily_price.message}</p>}
         </div>
       </div>
@@ -122,12 +122,12 @@ export default function ListingForm() {
       <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>City *</Label>
-          <Input {...register('city')} placeholder="San Jose" className="mt-1" />
+          <Input {...register('city')} placeholder="" className="mt-1" />
           {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city.message}</p>}
         </div>
         <div className="col-span-2">
           <Label>ZIP *</Label>
-          <Input {...register('zip_code')} placeholder="95110" maxLength={5} className="mt-1" />
+          <Input {...register('zip_code')} placeholder="" maxLength={5} className="mt-1" />
           {errors.zip_code && <p className="text-xs text-red-500 mt-1">{errors.zip_code.message}</p>}
         </div>
       </div>
