@@ -56,6 +56,12 @@ export async function POST(req: NextRequest) {
 
   if (insertError) return NextResponse.json({ error: insertError.message }, { status: 500 });
 
+  const formatPhone = (raw: string) => {
+    const d = (raw ?? '').replace(/\D/g, '').slice(0, 10);
+    if (d.length === 10) return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+    return raw;
+  };
+
   const startFormatted = new Date(start_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   const endFormatted = new Date(end_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   const days = Math.ceil((new Date(end_date).getTime() - new Date(start_date).getTime()) / (1000 * 60 * 60 * 24));
@@ -93,7 +99,7 @@ export async function POST(req: NextRequest) {
           <h3 style="margin: 0 0 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: #666;">Requester</h3>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 6px 0; color: #666; width: 140px;">Name</td><td style="padding: 6px 0;">${requester.name ?? 'Not provided'}</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Phone</td><td style="padding: 6px 0;"><a href="tel:${phone}" style="color: #E31937;">${phone}</a></td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Phone</td><td style="padding: 6px 0;"><a href="tel:${phone}" style="color: #111;">${formatPhone(phone)}</a></td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Email</td><td style="padding: 6px 0;"><a href="mailto:${requester.email}" style="color: #E31937;">${requester.email}</a></td></tr>
           </table>
         </div>
