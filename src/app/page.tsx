@@ -65,11 +65,11 @@ export default async function HomePage() {
         />
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">
-            Rent Tesla accessories.{' '}
-            <span style={{ color: '#E31937' }}>Bay Area first.</span>
+            More Tesla.{' '}
+            <span style={{ color: '#E31937' }}>Less clutter.</span>
           </h1>
           <p className="text-xl text-gray-400 mb-8">
-            Tow hitches, bike racks, roof systems, cargo boxes — borrow from Tesla owners near you.
+            Rent what you need. List what you own.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
