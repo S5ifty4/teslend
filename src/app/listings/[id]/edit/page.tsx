@@ -22,7 +22,7 @@ const schema = z.object({
   daily_price: z.number().min(1, 'Price must be at least $1'),
   city: z.string().min(2, 'City required'),
   zip_code: z.string().regex(/^\d{5}$/, 'Enter a valid 5-digit ZIP'),
-  master_accessory_id: z.string().optional().nullable(),
+  master_accessory_id: z.string().min(1, 'Please select an accessory type'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -64,7 +64,7 @@ export default function EditListingPage() {
         setListing(data);
         setImages(data.images ?? []);
         setSelectedModel(data.tesla_model ?? '');
-        setSelectedMasterId(data.master_accessory_id ?? null);
+        setSelectedMasterId(data.master_accessory_id ?? 'other');
         reset({
           title: data.title,
           description: data.description ?? '',
@@ -72,7 +72,7 @@ export default function EditListingPage() {
           daily_price: data.daily_price,
           city: data.city ?? '',
           zip_code: data.zip_code ?? '',
-          master_accessory_id: data.master_accessory_id ?? null,
+          master_accessory_id: data.master_accessory_id ?? 'other',
         });
       });
   }, [id, reset]);
@@ -169,32 +169,26 @@ export default function EditListingPage() {
         </div>
 
         <div>
-          <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
-          <p className="text-xs text-gray-500 mt-0.5 mb-1">
-            {selectedModel ? `Showing items compatible with ${selectedModel}` : 'Select a model above to filter compatible items'}
-          </p>
+          <Label>Accessory Type *</Label>
           <Select
-            value={selectedMasterId ?? 'none'}
+            value={selectedMasterId ?? 'other'}
             onValueChange={(v) => {
-              const id = !v || v === 'none' ? null : v;
+              const id = !v || v === 'other' ? null : v;
               setSelectedMasterId(id);
-              setValue('master_accessory_id', id);
+              setValue('master_accessory_id', v ?? 'other');
             }}
           >
-            <SelectTrigger className="mt-1">
-              <SelectValue>
-                {selectedMasterId
-                  ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
-                  : 'Select a catalog item (optional)'}
-              </SelectValue>
+            <SelectTrigger className="mt-1 w-full">
+              <SelectValue placeholder="Select accessory type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None</SelectItem>
               {compatibleItems.map((acc) => (
                 <SelectItem key={acc.id} value={acc.id}>{acc.name}</SelectItem>
               ))}
+              <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
+          {errors.master_accessory_id && <p className="text-xs text-red-500 mt-1">{errors.master_accessory_id.message}</p>}
         </div>
 
         <div>

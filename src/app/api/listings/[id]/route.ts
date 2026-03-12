@@ -31,9 +31,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     .from('users').select('id').eq('email', session.user.email).single();
   if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
+  const sanitizedBody = {
+    ...body,
+    master_accessory_id: body.master_accessory_id === 'other' || !body.master_accessory_id ? null : body.master_accessory_id,
+  };
+
   const { data, error } = await supabaseAdmin
     .from('listings')
-    .update({ ...body, updated_at: new Date().toISOString() })
+    .update({ ...sanitizedBody, updated_at: new Date().toISOString() })
     .eq('id', id)
     .eq('user_id', user.id)
     .select().single();
