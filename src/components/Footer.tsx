@@ -15,6 +15,7 @@ export default function Footer() {
           <Link href="/browse" className="hover:text-gray-700">Browse</Link>
           <Link href="/listings/new" className="hover:text-gray-700">List an Accessory</Link>
           <Link href="/how-it-works" className="hover:text-gray-700">How It Works</Link>
+          <Link href="/contact" className="hover:text-gray-700">Contact</Link>
         </nav>
 
         <p className="text-xs text-center md:text-right">
