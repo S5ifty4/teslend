@@ -92,7 +92,7 @@ export default function MyListingsPage() {
                   <p className="text-sm font-semibold mt-1 text-gray-900">${listing.daily_price}/day</p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
-                  <Link href={`/listings/${listing.id}`}>
+                  <Link href={`/listings/${listing.id}/edit`}>
                     <Button variant="outline" size="sm"><Pencil size={14} /></Button>
                   </Link>
                   <Button variant="outline" size="sm" onClick={() => deactivate(listing.id)}>
