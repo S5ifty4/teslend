@@ -85,7 +85,7 @@ export default function MyListingsPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold truncate">{listing.title}</p>
+                  <Link href={`/listings/${listing.id}`} className="font-semibold truncate hover:underline block">{listing.title}</Link>
                   <div className="flex gap-2 mt-1 flex-wrap">
                     <Badge style={{ backgroundColor: '#475569', color: 'white' }} className="text-xs">{listing.tesla_model}</Badge>
                   </div>
