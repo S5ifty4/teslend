@@ -19,12 +19,21 @@ export default function FilterBar({ accessories = [] }: Props) {
   const [primaryVehicle, setPrimaryVehicle] = useState('');
 
   useEffect(() => {
+    // Only auto-apply primary vehicle if no model filter is already in the URL
+    if (model) return;
     fetch('/api/user')
       .then((r) => r.ok ? r.json() : null)
       .then((data: User | null) => {
-        if (data?.tesla_model) setPrimaryVehicle(data.tesla_model);
+        if (data?.tesla_model) {
+          setPrimaryVehicle(data.tesla_model);
+          // Apply as actual filter so listings are filtered server-side
+          const p = new URLSearchParams(params.toString());
+          p.set('model', data.tesla_model);
+          router.replace(`/browse?${p.toString()}`);
+        }
       })
       .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const itemValue = master || (category === 'Other' ? 'other' : 'all');
