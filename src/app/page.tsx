@@ -53,15 +53,15 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-black text-white py-24 px-4 overflow-hidden">
+      <section className="relative bg-black text-white py-32 px-4 overflow-hidden" style={{ minHeight: '480px' }}>
         {/* Bay Area map — decorative hero background */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/hero-map.png"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-          style={{ opacity: 0.35 }}
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+          style={{ opacity: 0.35, objectPosition: '60% center' }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">
