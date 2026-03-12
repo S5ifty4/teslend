@@ -86,7 +86,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         <div className="space-y-6">
           <Card>
             <CardContent className="p-6">
-              <div className="text-4xl font-bold mb-1" style={{ color: '#E31937' }}>
+              <div className="text-4xl font-bold mb-1 text-gray-900">
                 ${listing.daily_price}
                 <span className="text-lg font-normal text-gray-400">/day</span>
               </div>

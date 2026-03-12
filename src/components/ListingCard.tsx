@@ -38,7 +38,7 @@ export default function ListingCard({ listing }: Props) {
             {listing.master_accessories?.name ?? 'Other'}
           </p>
           <div className="flex items-center justify-between mt-3">
-            <span className="font-bold text-lg" style={{ color: '#E31937' }}>
+            <span className="font-bold text-lg text-gray-900">
               ${listing.daily_price}/day
             </span>
             <span className="text-xs text-gray-400 flex items-center gap-1">
