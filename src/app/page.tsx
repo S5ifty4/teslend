@@ -69,6 +69,9 @@ export default async function HomePage() {
             <span className="block text-xl font-normal text-gray-400 mt-3">
               Rent what you need<br />List what you own
             </span>
+            <span className="block text-sm font-normal text-gray-500 mt-2">
+              Currently serving the Bay Area
+            </span>
           </h1>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
