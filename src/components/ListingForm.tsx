@@ -95,8 +95,8 @@ export default function ListingForm() {
             if (selectedMasterId) {
               const acc = masterAccessories.find((a) => a.id === selectedMasterId);
               if (acc && acc.compatibility?.length && !acc.compatibility.includes(model)) {
-                setSelectedMasterId(null);
-                setValue('master_accessory_id', null);
+                setSelectedMasterId('other');
+                setValue('master_accessory_id', 'other');
               }
             }
           }}>
