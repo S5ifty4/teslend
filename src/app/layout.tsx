@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     description: 'P2P Tesla accessory rentals — roof racks, hitch racks, bike carriers, camping gear. Bay Area first.',
     images: ['/og-image.png'],
   },
+  verification: {
+    google: 'sukdzZyVRgITYIJpulYy5B-KqXsDr76vNZ74wT2Ig44',
+  },
   robots: {
     index: true,
     follow: true,
