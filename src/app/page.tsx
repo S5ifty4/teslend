@@ -64,13 +64,10 @@ export default async function HomePage() {
           style={{ opacity: 0.55, objectPosition: '60% center' }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">
-            More adventure.{' '}
-            <span style={{ color: '#E31937' }}>Less clutter.</span>
+          <h1 className="text-4xl font-bold mb-6">
+            More adventure. <span style={{ color: '#E31937' }}>Less clutter.</span>{' '}
+            <span className="text-gray-400 font-normal">Rent what you need. List what you own.</span>
           </h1>
-          <p className="text-xl text-gray-400 mb-8">
-            Rent what you need. List what you own.
-          </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
               <Button size="lg" style={{ backgroundColor: '#E31937', color: 'white' }}>
