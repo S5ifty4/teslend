@@ -12,7 +12,7 @@ async function getListing(id: string): Promise<Listing | null> {
   try {
     const { data } = await supabaseAdmin
       .from('listings')
-      .select('*, users(id, name, image), master_accessories(name, compatibility)')
+      .select('*, users(id, name, image), master_accessories(name, compatibility, description, tesla_url)')
       .eq('id', id)
       .eq('active', true)
       .single();
@@ -85,6 +85,33 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             {listing.description && (
               <p className="text-gray-600 leading-relaxed whitespace-pre-line">{listing.description}</p>
             )}
+
+            {/* Tesla product description + link */}
+            {(() => {
+              const ma = listing.master_accessories as { name?: string; compatibility?: string[]; description?: string; tesla_url?: string } | null;
+              if (!ma?.description && !ma?.tesla_url) return null;
+              return (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">About this item</p>
+                  {ma.description && (
+                    <p className="text-sm text-gray-600 leading-relaxed">{ma.description}</p>
+                  )}
+                  {ma.tesla_url && (
+                    <a
+                      href={ma.tesla_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-gray-700 hover:text-black underline underline-offset-2"
+                    >
+                      View on Tesla Shop
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
 
