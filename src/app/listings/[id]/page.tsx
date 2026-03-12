@@ -107,17 +107,20 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                     );
                   })()}
                   {ma.tesla_url && (
-                    <a
-                      href={ma.tesla_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-gray-700 hover:text-black underline underline-offset-2"
-                    >
-                      View on Tesla Shop
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
+                    <p className="text-xs text-gray-400 mt-4">
+                      Product information courtesy of{' '}
+                      <a
+                        href={ma.tesla_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-0.5 text-gray-500 hover:text-black underline underline-offset-2"
+                      >
+                        Tesla Shop
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </p>
                   )}
                 </div>
               );
