@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 4px 0 0; color: #666;">via Teslend</p>
         </div>
 
-        <p>Hi ${owner.name ?? 'there'},</p>
+        <p>Hi ${owner.name?.split(' ')[0] ?? 'there'},</p>
         <p>Someone is interested in renting your <strong>${listing.title}</strong>.</p>
 
         <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; margin: 24px 0;">
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 4px 0 0; color: #666;">via Teslend</p>
         </div>
 
-        <p>Hi ${requester.name ?? 'there'},</p>
+        <p>Hi ${requester.name?.split(' ')[0] ?? 'there'},</p>
         <p>Your rental inquiry for <strong>${listing.title}</strong> in ${listing.city} has been sent to the owner. They'll reach out to you directly once they review your request.</p>
 
         <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; margin: 24px 0;">
