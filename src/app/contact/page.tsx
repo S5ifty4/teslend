@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,12 +16,22 @@ import {
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export default function ContactPage() {
+  const { data: session } = useSession();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [category, setCategory] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Pre-fill from session/profile once loaded
+  useEffect(() => {
+    if (session?.user) {
+      if (session.user.name && !name) setName(session.user.name);
+      if (session.user.email && !email) setEmail(session.user.email);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,10 +67,7 @@ export default function ContactPage() {
   return (
     <div className="max-w-xl mx-auto px-4 py-16">
       <div className="mb-10">
-        <h1 className="text-3xl font-bold mb-2">Contact Us</h1>
-        <p className="text-gray-500">
-          Have a question, found a bug, or want to suggest a feature? We read every message.
-        </p>
+        <h1 className="text-3xl font-bold">Contact Us</h1>
       </div>
 
       {status === 'success' ? (
@@ -70,7 +78,7 @@ export default function ContactPage() {
             </svg>
           </div>
           <h2 className="text-lg font-semibold mb-1">Message sent</h2>
-          <p className="text-gray-500 text-sm">We'll get back to you soon.</p>
+          <p className="text-gray-500 text-sm">We&apos;ll get back to you soon.</p>
           <button
             onClick={() => setStatus('idle')}
             className="mt-6 text-sm text-gray-500 hover:text-black underline underline-offset-2"
@@ -106,7 +114,7 @@ export default function ContactPage() {
           <div className="space-y-1.5">
             <Label>Category</Label>
             <Select value={category} onValueChange={(v: string | null) => setCategory(v ?? '')}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a category">
                   {category === 'feature' && 'Feature Request'}
                   {category === 'bug' && 'Bug Report'}
