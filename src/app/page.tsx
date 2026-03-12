@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ListingGrid from '@/components/ListingGrid';
@@ -7,6 +8,14 @@ import { supabaseAdmin } from '@/lib/supabase';
 
 // Revalidate homepage every 60 seconds so listing changes reflect promptly
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Teslend: Rent Tesla Accessories in the Bay Area',
+  description: 'Find and rent Tesla accessories from local owners in the San Francisco Bay Area. Roof racks, hitch racks, bike carriers, camping gear and more — no middleman.',
+  alternates: {
+    canonical: 'https://teslend.com',
+  },
+};
 
 async function getRecentListings(): Promise<Listing[]> {
   try {

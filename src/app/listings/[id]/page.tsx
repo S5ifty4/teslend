@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +23,32 @@ async function getListing(id: string): Promise<Listing | null> {
   }
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const listing = await getListing(id);
+  if (!listing) return { title: 'Listing Not Found' };
+
+  const ma = listing.master_accessories as { name?: string; description?: string } | null;
+  const itemType = ma?.name ?? listing.title;
+  const description = listing.description
+    ? listing.description.slice(0, 155)
+    : `Rent a ${itemType} in ${listing.city ?? 'the Bay Area'} for $${listing.daily_price}/day. ${listing.tesla_model} compatible.`;
+
+  return {
+    title: `Rent: ${listing.title} in ${listing.city ?? 'Bay Area'} — $${listing.daily_price}/day`,
+    description,
+    alternates: {
+      canonical: `https://teslend.com/listings/${id}`,
+    },
+    openGraph: {
+      title: `${listing.title} — $${listing.daily_price}/day in ${listing.city ?? 'Bay Area'}`,
+      description,
+      url: `https://teslend.com/listings/${id}`,
+      images: listing.images?.[0] ? [{ url: listing.images[0], alt: listing.title }] : [],
+    },
+  };
+}
+
 export default async function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const listing = await getListing(id);
@@ -29,7 +56,41 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
   const images = listing.images?.length ? listing.images : [];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: listing.title,
+    description: listing.description ?? `Rent a ${listing.title} in ${listing.city ?? 'the Bay Area'}.`,
+    image: images,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      price: listing.daily_price,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: listing.daily_price,
+        priceCurrency: 'USD',
+        unitText: 'DAY',
+      },
+      availability: 'https://schema.org/InStock',
+      url: `https://teslend.com/listings/${id}`,
+      seller: {
+        '@type': 'Person',
+        name: (listing.users as { name?: string } | null)?.name ?? 'Teslend User',
+      },
+    },
+    areaServed: {
+      '@type': 'Place',
+      name: listing.city ?? 'San Francisco Bay Area',
+    },
+  };
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Left: images + details */}
@@ -159,5 +220,6 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         </div>
       </div>
     </div>
+    </>
   );
 }

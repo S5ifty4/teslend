@@ -1,9 +1,18 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import FilterBar from '@/components/FilterBar';
 import ListingGrid from '@/components/ListingGrid';
 import { Listing, MasterAccessory } from '@/lib/types';
 import { supabaseAdmin } from '@/lib/supabase';
+
+export const metadata: Metadata = {
+  title: 'Browse Tesla Accessories for Rent',
+  description: 'Browse all Tesla accessory listings in the Bay Area. Filter by model or item type. Roof racks, hitch racks, bike carriers, cargo boxes, camping gear and more.',
+  alternates: {
+    canonical: 'https://teslend.com/browse',
+  },
+};
 
 async function getMasterAccessories(): Promise<MasterAccessory[]> {
   try {
