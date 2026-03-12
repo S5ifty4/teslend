@@ -151,7 +151,7 @@ export default async function HomePage() {
               <div className="space-y-4">
                 {[
                   { n: '1', t: 'Create a listing in under 2 minutes' },
-                  { n: '2', t: 'Get inquiries by email — no app required' },
+                  { n: '2', t: 'Get inquiries by email, no app required' },
                   { n: '3', t: 'Set your own price, terms, and payment' },
                   { n: '4', t: 'Manage or remove your listing any time' },
                 ].map(({ n, t }) => (

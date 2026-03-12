@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
         <blockquote style="border-left: 3px solid #E31937; padding-left: 16px; color: #555;">
           ${message.replace(/\n/g, '<br>')}
         </blockquote>
-        <p>To reply, simply respond to this email — it will go directly to ${renter_name}.</p>
+        <p>To reply, simply respond to this email and it will go directly to ${renter_name}.</p>
         <hr style="border: 1px solid #eee; margin: 24px 0;" />
         <p style="color: #999; font-size: 12px;">Teslend · Bay Area Tesla Accessory Rentals</p>
       </div>

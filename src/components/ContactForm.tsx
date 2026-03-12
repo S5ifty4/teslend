@@ -60,7 +60,7 @@ export default function ContactForm({ listingId, listingTitle }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <p className="text-sm text-gray-500">
-        Interested in <strong>{listingTitle}</strong>? Send a message — the lister will reply to your email.
+        Interested in <strong>{listingTitle}</strong>? Send a message and the lister will reply to your email.
       </p>
 
       <div>

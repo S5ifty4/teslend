@@ -8,7 +8,7 @@ export default function Footer() {
           <span className="font-bold text-gray-900">
             <span style={{ color: '#E31937' }}>Tes</span>lend
           </span>
-          <span>— Bay Area Tesla accessories marketplace</span>
+          <span>· Bay Area Tesla accessories marketplace</span>
         </div>
 
         <nav className="flex flex-wrap gap-5 justify-center">

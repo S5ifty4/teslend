@@ -79,7 +79,7 @@ export default function ImageUpload({ value, onChange, maxImages = 5 }: Props) {
         const data = await res.json();
         if (data.url) newUrls.push(data.url);
       } catch {
-        setUploadError('Upload failed — please try again');
+        setUploadError('Upload failed. Please try again.');
       }
     }
 

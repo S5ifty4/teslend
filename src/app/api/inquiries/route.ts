@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
         <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; margin: 24px 0;">
           <h3 style="margin: 0 0 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: #666;">Rental Details</h3>
           <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 6px 0; color: #666; width: 140px;">Dates</td><td style="padding: 6px 0; font-weight: 600;">${startFormatted} — ${endFormatted} (${days} day${days !== 1 ? 's' : ''})</td></tr>
+            <tr><td style="padding: 6px 0; color: #666; width: 140px;">Dates</td><td style="padding: 6px 0; font-weight: 600;">${startFormatted} to ${endFormatted} (${days} day${days !== 1 ? 's' : ''})</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>
           </table>
@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
           <h3 style="margin: 0 0 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: #666;">Your Request Summary</h3>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 6px 0; color: #666; width: 140px;">Item</td><td style="padding: 6px 0;">${listing.title}</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Dates</td><td style="padding: 6px 0;">${startFormatted} — ${endFormatted}</td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Dates</td><td style="padding: 6px 0;">${startFormatted} to ${endFormatted}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Duration</td><td style="padding: 6px 0;">${days} day${days !== 1 ? 's' : ''}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total} at $${listing.daily_price}/day</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Your Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>

@@ -3,22 +3,22 @@ import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'How It Works — Teslend',
+  title: 'How It Works | Teslend',
   description: 'Learn how Teslend connects Tesla owners with people who need their accessories for a weekend or a trip.',
 };
 
 const faqs = [
   {
     q: 'What is Teslend?',
-    a: 'Teslend is a peer-to-peer listing platform where Tesla owners in the Bay Area can list accessories they own — bike racks, ski carriers, roof systems, tow hitches, camping gear — for other Tesla owners to rent. Think Craigslist or Facebook Marketplace, but specifically for Tesla accessories.',
+    a: 'Teslend is a peer-to-peer listing platform where Tesla owners in the Bay Area can list accessories they own (bike racks, ski carriers, roof systems, tow hitches, camping gear) for other Tesla owners to rent. Think Craigslist or Facebook Marketplace, but specifically for Tesla accessories.',
   },
   {
     q: 'How does a rental actually work?',
-    a: 'You find an item, submit an inquiry with your rental dates and contact info. The owner receives an email with your details and reaches out to you directly to arrange pickup, dropoff, and payment. Teslend facilitates the discovery — the actual transaction happens between the two of you.',
+    a: 'You find an item, submit an inquiry with your rental dates and contact info. The owner receives an email with your details and reaches out to you directly to arrange pickup, dropoff, and payment. Teslend facilitates the discovery; the actual transaction happens between the two of you.',
   },
   {
     q: 'Does Teslend handle payments?',
-    a: 'No. Teslend does not process, hold, or facilitate any payments. Pricing shown on listings is the owner\'s suggested daily rate for reference only. How you pay — Venmo, Zelle, cash, whatever — is entirely between you and the owner.',
+    a: 'No. Teslend does not process, hold, or facilitate any payments. Pricing shown on listings is the owner\'s suggested daily rate for reference only. How you pay (Venmo, Zelle, cash, whatever) is entirely between you and the owner.',
   },
   {
     q: 'Is there a fee to list or rent?',
@@ -34,7 +34,7 @@ const faqs = [
   },
   {
     q: 'What areas do you cover?',
-    a: 'Bay Area first — San Francisco, East Bay, South Bay, Peninsula, and the surrounding counties. We plan to expand to other metro areas as the community grows.',
+    a: 'Bay Area first: San Francisco, East Bay, South Bay, Peninsula, and the surrounding counties. We plan to expand to other metro areas as the community grows.',
   },
   {
     q: 'Why Tesla accessories only?',
@@ -42,10 +42,10 @@ const faqs = [
   },
   {
     q: 'Can I list something that works on non-Tesla vehicles too?',
-    a: 'If you own it and have rented it for use with your Tesla, yes. Select the Tesla model you\'ve used it with — renters are responsible for verifying compatibility with their own vehicle.',
+    a: 'If you own it and have rented it for use with your Tesla, yes. Select the Tesla model you\'ve used it with; renters are responsible for verifying compatibility with their own vehicle.',
   },
   {
-    q: 'I sent an inquiry — what now?',
+    q: 'I sent an inquiry. What now?',
     a: 'The listing owner will receive an email with your rental dates, contact info, and any note you included. It\'s up to them to respond directly to your email or phone number. If you don\'t hear back within a day or two, the owner may be unavailable.',
   },
 ];
@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
       <div className="mb-14">
         <h1 className="text-4xl font-bold mb-4">How It Works</h1>
         <p className="text-gray-500 text-lg leading-relaxed">
-          Teslend is the simplest way for Bay Area Tesla owners to share accessories they already own — and for anyone with a Tesla to find gear for a weekend trip without buying something they&apos;ll only use twice a year.
+          Teslend is the simplest way for Bay Area Tesla owners to share accessories they already own, and for anyone with a Tesla to find gear for a weekend trip without buying something they&apos;ll only use twice a year.
         </p>
       </div>
 
@@ -67,7 +67,7 @@ export default function HowItWorksPage() {
         <div className="space-y-6">
           {[
             { n: '1', title: 'Browse listings', body: 'Search by Tesla model or accessory type. Filter by location. Every listing shows the owner\'s suggested daily price, condition, and photos.' },
-            { n: '2', title: 'Send an inquiry', body: 'Select your rental dates and submit an inquiry. Your name, email, phone number, and note go directly to the owner — no middleman, no app messaging.' },
+            { n: '2', title: 'Send an inquiry', body: 'Select your rental dates and submit an inquiry. Your name, email, phone number, and note go directly to the owner with no middleman and no app messaging.' },
             { n: '3', title: 'Sort it out with the owner', body: 'The owner contacts you directly. Agree on pickup, dropoff, payment method, and any deposit you\'re both comfortable with. Teslend is not involved at this stage.' },
             { n: '4', title: 'Pick it up and ride', body: 'Get the gear, go on your trip, return it in the condition you received it.' },
           ].map(({ n, title, body }) => (
@@ -143,7 +143,7 @@ export default function HowItWorksPage() {
             Teslend does not verify the accuracy, condition, or fitness of any listed accessory, nor does it verify the identity of users beyond Google sign-in. Users are solely responsible for conducting their own due diligence before entering into any rental arrangement.
           </p>
           <p>
-            By using Teslend — whether as a listing owner or as a renter — you acknowledge and agree that Teslend bears no responsibility for any outcome of transactions arranged through the platform, and that you assume all risks associated with peer-to-peer rental agreements.
+            By using Teslend, whether as a listing owner or as a renter, you acknowledge and agree that Teslend bears no responsibility for any outcome of transactions arranged through the platform, and that you assume all risks associated with peer-to-peer rental agreements.
           </p>
           <p className="text-xs text-gray-400 pt-2 border-t border-gray-200">
             Teslend is not affiliated with, endorsed by, or sponsored by Tesla, Inc. Tesla is a registered trademark of Tesla, Inc.

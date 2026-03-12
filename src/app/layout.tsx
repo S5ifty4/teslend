@@ -8,7 +8,7 @@ import { SessionProvider } from '@/components/SessionProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Teslend — Rent Tesla Accessories',
+  title: 'Teslend: Rent Tesla Accessories',
   description: 'P2P rental marketplace for Tesla accessories. Bay Area first.',
   icons: {
     icon: '/favicon.png',

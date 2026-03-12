@@ -205,7 +205,7 @@ export default function EditListingPage() {
         </div>
 
         {error && <p className="text-sm text-red-500">{error}</p>}
-        {saved && <p className="text-sm text-green-600">Saved — redirecting...</p>}
+        {saved && <p className="text-sm text-green-600">Saved, redirecting...</p>}
 
         <div className="flex gap-3">
           <Button
