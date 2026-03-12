@@ -92,7 +92,7 @@ export default function ContactForm({ listingId, listingTitle }: Props) {
         type="submit"
         disabled={isSubmitting}
         className="w-full text-white"
-        style={{ backgroundColor: '#E31937' }}
+        style={{ backgroundColor: '#3E6AE1' }}
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}
       </Button>

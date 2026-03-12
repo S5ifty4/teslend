@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTeslaModels } from '@/lib/useTeslaModels';
-import { Camera, Loader2 } from 'lucide-react';
+import { Camera } from 'lucide-react';
 import { User } from '@/lib/types';
 
 const schema = z.object({
@@ -35,6 +35,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const [profile, setProfile] = useState<User | null>(null);
   const [error, setError] = useState('');
+  const [saved, setSaved] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [selectedModel, setSelectedModel] = useState<string>('');
@@ -91,6 +92,7 @@ export default function ProfilePage() {
 
   async function onSubmit(data: FormData) {
     setError('');
+    setSaved(false);
     const res = await fetch('/api/user', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -98,6 +100,8 @@ export default function ProfilePage() {
     });
     if (res.ok) {
       await update();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
     } else {
       const d = await res.json();
       setError(d.error ?? 'Something went wrong');
@@ -187,19 +191,15 @@ export default function ProfilePage() {
         </div>
 
         {error && <p className="text-sm text-red-500">{error}</p>}
+        {saved && <p className="text-sm text-green-600">Profile saved.</p>}
 
         <Button
           type="submit"
           disabled={isSubmitting || uploading}
           className="w-full text-white"
-          style={{ backgroundColor: '#E31937' }}
+          style={{ backgroundColor: '#3E6AE1' }}
         >
-          {isSubmitting ? (
-            <span className="flex items-center justify-center gap-2">
-              <Loader2 size={16} className="animate-spin" />
-              Saving Changes
-            </span>
-          ) : 'Save Changes'}
+          {isSubmitting ? 'Saving...' : 'Save Changes'}
         </Button>
       </form>
     </div>

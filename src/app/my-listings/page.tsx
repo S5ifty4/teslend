@@ -28,7 +28,7 @@ export default function MyListingsPage() {
     return (
       <div className="max-w-6xl mx-auto px-4 py-20 text-center">
         <p className="text-gray-500 mb-4">Sign in to manage your listings.</p>
-        <Button onClick={() => signIn('google')} style={{ backgroundColor: '#E31937', color: 'white' }}>
+        <Button onClick={() => signIn('google')} style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
           Sign in with Google
         </Button>
       </div>
@@ -46,7 +46,7 @@ export default function MyListingsPage() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">My Listings</h1>
         <Link href="/listings/new">
-          <Button style={{ backgroundColor: '#E31937', color: 'white' }}>
+          <Button style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
             <Plus size={16} className="mr-1" /> New Listing
           </Button>
         </Link>
@@ -63,7 +63,7 @@ export default function MyListingsPage() {
           </div>
           <p className="mb-4">No listings yet.</p>
           <Link href="/listings/new">
-            <Button style={{ backgroundColor: '#E31937', color: 'white' }}>
+            <Button style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
               List your first accessory
             </Button>
           </Link>

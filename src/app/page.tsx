@@ -87,7 +87,7 @@ export default async function HomePage() {
           </h1>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
-              <Button size="lg" style={{ backgroundColor: '#E31937', color: 'white' }}>
+              <Button size="lg" style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
                 Browse Accessories
               </Button>
             </Link>
@@ -140,7 +140,7 @@ export default async function HomePage() {
                   <div key={n} className="flex items-center gap-3">
                     <div
                       className="w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0"
-                      style={{ backgroundColor: '#E31937' }}
+                      style={{ backgroundColor: '#3E6AE1' }}
                     >
                       {n}
                     </div>
@@ -150,7 +150,7 @@ export default async function HomePage() {
               </div>
               <div className="mt-5">
                 <Link href="/browse">
-                  <Button size="sm" style={{ backgroundColor: '#E31937', color: 'white' }}>
+                  <Button size="sm" style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
                     Browse Accessories
                   </Button>
                 </Link>

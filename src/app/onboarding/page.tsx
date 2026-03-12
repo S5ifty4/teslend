@@ -172,7 +172,7 @@ export default function OnboardingPage() {
             type="submit"
             disabled={isSubmitting || uploading}
             className="w-full text-white"
-            style={{ backgroundColor: '#E31937' }}
+            style={{ backgroundColor: '#3E6AE1' }}
           >
             {isSubmitting ? 'Saving...' : 'Continue'}
           </Button>

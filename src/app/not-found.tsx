@@ -11,7 +11,7 @@ export default function NotFound() {
       </p>
       <div className="flex gap-3 flex-wrap justify-center">
         <Link href="/browse">
-          <Button style={{ backgroundColor: '#E31937', color: 'white' }}>
+          <Button style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
             Browse Accessories
           </Button>
         </Link>

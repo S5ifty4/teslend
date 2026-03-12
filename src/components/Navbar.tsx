@@ -48,7 +48,7 @@ export default function Navbar() {
               </Button>
             </>
           ) : (
-            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: '#E31937', color: 'white' }}>
+            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
               Sign In
             </Button>
           )}
@@ -70,7 +70,7 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: '#E31937', color: 'white' }}>
+            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
               Sign In
             </Button>
           )}

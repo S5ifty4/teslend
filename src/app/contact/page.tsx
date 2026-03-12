@@ -154,7 +154,7 @@ export default function ContactPage() {
             type="submit"
             disabled={status === 'loading' || !category}
             className="w-full"
-            style={{ backgroundColor: '#E31937', color: 'white' }}
+            style={{ backgroundColor: '#3E6AE1', color: 'white' }}
           >
             {status === 'loading' ? 'Sending...' : 'Send Message'}
           </Button>

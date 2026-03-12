@@ -21,7 +21,7 @@ const schema = z.object({
   daily_price: z.number().min(1, 'Price must be at least $1'),
   city: z.string().min(2, 'City required'),
   zip_code: z.string().regex(/^\d{5}$/, 'Enter a valid 5-digit ZIP'),
-  master_accessory_id: z.string().min(1, 'Please select an accessory type'),
+  master_accessory_id: z.string().optional().nullable(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -74,7 +74,7 @@ export default function ListingForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl">
       <div>
         <Label>Title *</Label>
-        <Input {...register('title')} placeholder="Tesla Model Y Hitch Rack" className="mt-1" />
+        <Input {...register('title')} placeholder="e.g. Tesla Model Y Thule Hitch Bike Rack" className="mt-1" />
         {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title.message}</p>}
       </div>
 
@@ -114,7 +114,7 @@ export default function ListingForm() {
 
         <div className="col-span-2">
           <Label>Price/day ($) *</Label>
-          <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="" className="mt-1" />
+          <Input {...register('daily_price', { valueAsNumber: true })} type="number" min="1" step="0.01" placeholder="25" className="mt-1" />
           {errors.daily_price && <p className="text-xs text-red-500 mt-1">{errors.daily_price.message}</p>}
         </div>
       </div>
@@ -122,39 +122,47 @@ export default function ListingForm() {
       <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>City *</Label>
-          <Input {...register('city')} placeholder="" className="mt-1" />
+          <Input {...register('city')} placeholder="San Jose" className="mt-1" />
           {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city.message}</p>}
         </div>
         <div className="col-span-2">
           <Label>ZIP *</Label>
-          <Input {...register('zip_code')} placeholder="" maxLength={5} className="mt-1" />
+          <Input {...register('zip_code')} placeholder="95110" maxLength={5} className="mt-1" />
           {errors.zip_code && <p className="text-xs text-red-500 mt-1">{errors.zip_code.message}</p>}
         </div>
       </div>
 
       <div>
-        <Label>Accessory Type *</Label>
+        <Label>Catalog Item <span className="text-gray-400 font-normal">(optional)</span></Label>
+        <p className="text-xs text-gray-500 mt-0.5 mb-1">
+          {selectedModel
+            ? `Showing items compatible with ${selectedModel}`
+            : 'Select a model above to filter compatible items'}
+        </p>
         <Select
-          value={selectedMasterId ?? 'other'}
+          value={selectedMasterId ?? 'none'}
           onValueChange={(v: string | null) => {
-            const id = !v || v === 'other' ? null : v;
+            const id = !v || v === 'none' ? null : v;
             setSelectedMasterId(id);
-            setValue('master_accessory_id', v ?? 'other');
+            setValue('master_accessory_id', id);
           }}
         >
-          <SelectTrigger className="mt-1 w-full">
-            <SelectValue placeholder="Select accessory type" />
+          <SelectTrigger className="mt-1">
+            <SelectValue>
+              {selectedMasterId
+                ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
+                : 'Select a catalog item (optional)'}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="none">None</SelectItem>
             {compatibleItems.map((acc) => (
               <SelectItem key={acc.id} value={acc.id}>
                 {acc.name}
               </SelectItem>
             ))}
-            <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
-        {errors.master_accessory_id && <p className="text-xs text-red-500 mt-1">{errors.master_accessory_id.message}</p>}
       </div>
 
       <div>
@@ -170,7 +178,7 @@ export default function ListingForm() {
         type="submit"
         disabled={isSubmitting}
         className="text-white px-8"
-        style={{ backgroundColor: '#E31937' }}
+        style={{ backgroundColor: '#3E6AE1' }}
       >
         {isSubmitting ? 'Publishing...' : 'Publish Listing'}
       </Button>
