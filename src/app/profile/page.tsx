@@ -19,10 +19,16 @@ const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   phone: z.string().optional(),
   tesla_model: z.string().optional(),
-  tesla_year: z.number().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
+
+function formatPhone(raw: string): string {
+  const digits = raw.replace(/\D/g, '').slice(0, 10);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
@@ -32,6 +38,8 @@ export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string>('');
+  const [phoneDisplay, setPhoneDisplay] = useState('');
   const { models: teslaModels } = useTeslaModels();
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -47,14 +55,20 @@ export default function ProfilePage() {
         .then((data: User) => {
           setProfile(data);
           setAvatarUrl(data.image ?? session?.user?.image ?? null);
-          // Default to first name only from Google on first load
           const existingName = data.name ?? '';
           const googleName = session?.user?.name ?? '';
           const defaultName = existingName || googleName.split(' ')[0];
           setValue('name', defaultName);
-          setValue('phone', data.phone ?? '');
-          if (data.tesla_model) setValue('tesla_model', data.tesla_model);
-          if (data.tesla_year) setValue('tesla_year', data.tesla_year);
+
+          // Phone: store raw digits, display formatted
+          const rawPhone = (data.phone ?? '').replace(/\D/g, '');
+          setPhoneDisplay(formatPhone(rawPhone));
+          setValue('phone', rawPhone);
+
+          // Model: controlled state so Select re-renders correctly
+          const model = data.tesla_model ?? '';
+          setSelectedModel(model);
+          setValue('tesla_model', model);
         });
     }
   }, [status, session, router, setValue]);
@@ -139,18 +153,34 @@ export default function ProfilePage() {
 
         <div>
           <Label>Phone number <span className="text-gray-400 font-normal">(optional)</span></Label>
-          <Input {...register('phone')} type="tel" placeholder="+1 (415) 555-0100" className="mt-1" />
+          <Input
+            type="tel"
+            value={phoneDisplay}
+            className="mt-1"
+            onChange={(e) => {
+              const formatted = formatPhone(e.target.value);
+              const digits = formatted.replace(/\D/g, '');
+              setPhoneDisplay(formatted);
+              setValue('phone', digits);
+            }}
+          />
           <p className="text-xs text-gray-400 mt-1">Shared with listing owners when you send an inquiry.</p>
         </div>
 
         <div>
           <Label>Primary Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
           <Select
-            defaultValue={profile.tesla_model ?? undefined}
-            onValueChange={(v) => setValue('tesla_model', (v ?? '') as string)}
+            value={selectedModel}
+            onValueChange={(v) => {
+              const val = v ?? '';
+              setSelectedModel(val);
+              setValue('tesla_model', val);
+            }}
           >
             <SelectTrigger className="w-full mt-1">
-              <SelectValue placeholder="Select your model" />
+              <SelectValue placeholder="Select your model">
+                {selectedModel || 'Select your model'}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               {teslaModels.map((m) => (

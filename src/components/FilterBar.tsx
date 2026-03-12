@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MasterAccessory } from '@/lib/types';
+import { MasterAccessory, User } from '@/lib/types';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 
 interface Props {
@@ -15,6 +16,16 @@ export default function FilterBar({ accessories = [] }: Props) {
   const model = params.get('model') ?? '';
   const master = params.get('master') ?? '';
   const category = params.get('category') ?? '';
+  const [primaryVehicle, setPrimaryVehicle] = useState('');
+
+  useEffect(() => {
+    fetch('/api/user')
+      .then((r) => r.ok ? r.json() : null)
+      .then((data: User | null) => {
+        if (data?.tesla_model) setPrimaryVehicle(data.tesla_model);
+      })
+      .catch(() => {});
+  }, []);
 
   const itemValue = master || (category === 'Other' ? 'other' : 'all');
   const { models } = useTeslaModels();
@@ -41,9 +52,9 @@ export default function FilterBar({ accessories = [] }: Props) {
     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
       <div className="flex flex-col gap-1 w-full sm:w-64">
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Tesla Model</span>
-        <Select value={model || 'all'} onValueChange={(v) => updateModel(v ?? '')}>
+        <Select value={model || primaryVehicle || 'all'} onValueChange={(v) => updateModel(v ?? '')}>
           <SelectTrigger className="w-full">
-            <SelectValue>{model || 'All Models'}</SelectValue>
+            <SelectValue>{model || primaryVehicle || 'All Models'}</SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Models</SelectItem>
