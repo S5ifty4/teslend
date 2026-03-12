@@ -104,6 +104,7 @@ export default function MyListingsPage() {
                     size="sm"
                     onClick={() => setConfirming(listing.id)}
                     disabled={deletingId === listing.id}
+                    className="text-red-500 hover:text-red-600 hover:border-red-300"
                   >
                     <Trash2 size={14} />
                   </Button>
