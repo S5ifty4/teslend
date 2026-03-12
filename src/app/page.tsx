@@ -5,6 +5,9 @@ import MasterAccessoryCard from '@/components/MasterAccessoryCard';
 import { Listing, MasterAccessory } from '@/lib/types';
 import { supabaseAdmin } from '@/lib/supabase';
 
+// Revalidate homepage every 60 seconds so listing changes reflect promptly
+export const revalidate = 60;
+
 async function getRecentListings(): Promise<Listing[]> {
   try {
     const { data } = await supabaseAdmin
