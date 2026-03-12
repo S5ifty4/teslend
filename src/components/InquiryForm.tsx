@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,6 +44,22 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
   const [days, setDays] = useState(0);
+  const [phoneDisplay, setPhoneDisplay] = useState('');
+
+  function formatPhone(raw: string): string {
+    const digits = raw.replace(/\D/g, '').slice(0, 10);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  }
+
+  // Pre-fill phone from profile, formatted
+  useEffect(() => {
+    const raw = (user?.phone ?? '').replace(/\D/g, '');
+    setPhoneDisplay(formatPhone(raw));
+    setValue('phone', raw);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.phone]);
 
   const today = new Date().toISOString().split('T')[0];
   const { models: teslaModels } = useTeslaModels();
@@ -173,11 +189,15 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
       <div>
         <Label>Phone Number *</Label>
         <Input
-          {...register('phone')}
           type="tel"
-          placeholder="+1 (415) 555-0100"
+          value={phoneDisplay}
           className="mt-1"
-          defaultValue={user?.phone ?? ''}
+          onChange={(e) => {
+            const formatted = formatPhone(e.target.value);
+            const digits = formatted.replace(/\D/g, '');
+            setPhoneDisplay(formatted);
+            setValue('phone', digits, { shouldValidate: true });
+          }}
         />
         <p className="text-xs text-gray-400 mt-1">Shared with the listing owner so they can reach you.</p>
         {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>}
