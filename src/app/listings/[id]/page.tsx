@@ -93,9 +93,19 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
               return (
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">About this item</p>
-                  {ma.description && (
-                    <p className="text-sm text-gray-600 leading-relaxed">{ma.description}</p>
-                  )}
+                  {ma.description && (() => {
+                    const parts = ma.description!.split(/\n\n(Note:)/);
+                    const body = parts[0];
+                    const note = parts.length > 1 ? parts[1] + parts[2] : null;
+                    return (
+                      <>
+                        <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{body}</p>
+                        {note && (
+                          <p className="text-sm text-gray-500 italic mt-3 leading-relaxed">{note}</p>
+                        )}
+                      </>
+                    );
+                  })()}
                   {ma.tesla_url && (
                     <a
                       href={ma.tesla_url}
