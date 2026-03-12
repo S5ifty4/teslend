@@ -61,14 +61,14 @@ export async function POST(req: NextRequest) {
   const days = Math.ceil((new Date(end_date).getTime() - new Date(start_date).getTime()) / (1000 * 60 * 60 * 24));
   const total = (days * listing.daily_price).toFixed(2);
 
-  const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'noreply@teslend.com';
+  const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'inquiry@teslend.com';
 
   // Email to owner
   await resend.emails.send({
     from: fromEmail,
     to: owner.email,
     replyTo: requester.email,
-    subject: `Rental inquiry for your "${listing.title}"`,
+    subject: `Rental inquiry for "${listing.title}"`,
     html: `
       <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
         <div style="border-bottom: 3px solid #E31937; padding-bottom: 16px; margin-bottom: 24px;">
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
           <h3 style="margin: 0 0 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: #666;">Rental Details</h3>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 6px 0; color: #666; width: 140px;">Dates</td><td style="padding: 6px 0; font-weight: 600;">${startFormatted} — ${endFormatted} (${days} day${days !== 1 ? 's' : ''})</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600; color: #E31937;">$${total}</td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>
           </table>
           ${note ? `<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #ddd;"><p style="margin: 0; color: #666; font-size: 13px;">Note from requester:</p><p style="margin: 8px 0 0;">${note}</p></div>` : ''}
@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
             <tr><td style="padding: 6px 0; color: #666; width: 140px;">Item</td><td style="padding: 6px 0;">${listing.title}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Dates</td><td style="padding: 6px 0;">${startFormatted} — ${endFormatted}</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Duration</td><td style="padding: 6px 0;">${days} day${days !== 1 ? 's' : ''}</td></tr>
-            <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600; color: #E31937;">$${total} at $${listing.daily_price}/day</td></tr>
+            <tr><td style="padding: 6px 0; color: #666;">Est. Total</td><td style="padding: 6px 0; font-weight: 600;">$${total} at $${listing.daily_price}/day</td></tr>
             <tr><td style="padding: 6px 0; color: #666;">Your Vehicle</td><td style="padding: 6px 0;">${tesla_model}${tesla_year ? ` (${tesla_year})` : ''}</td></tr>
           </table>
         </div>
