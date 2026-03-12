@@ -21,9 +21,9 @@ export default function Footer() {
         <p className="text-xs text-center md:text-right">
           Not affiliated with Tesla, Inc. &copy; {new Date().getFullYear()} Teslend.
           <br />
-          <Link href="/how-it-works#disclaimer" className="underline underline-offset-2 hover:text-gray-600">
-            Platform disclaimer
-          </Link>
+          <Link href="/terms" className="underline underline-offset-2 hover:text-gray-600">Terms</Link>
+          {' · '}
+          <Link href="/privacy" className="underline underline-offset-2 hover:text-gray-600">Privacy</Link>
         </p>
       </div>
     </footer>
