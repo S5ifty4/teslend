@@ -65,7 +65,7 @@ export default async function HomePage() {
         />
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-6">
-            More adventure <span style={{ color: '#E31937' }}>Less clutter</span>
+            More adventure<br /><span style={{ color: '#E31937' }}>Less clutter</span>
             <span className="block text-xl font-normal text-gray-400 mt-3">
               Rent what you need<br />List what you own
             </span>
