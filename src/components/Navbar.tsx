@@ -138,6 +138,9 @@ export default function Navbar() {
             <Link href="/profile" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               Edit Profile
             </Link>
+            <Link href="/my-listings" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+              My Listings
+            </Link>
             <div className="pt-2 border-t mt-1">
               <button
                 onClick={() => { signOut({ callbackUrl: '/' }); setOpen(false); }}
