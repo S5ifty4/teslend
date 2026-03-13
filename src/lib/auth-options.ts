@@ -12,10 +12,32 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
-      await supabaseAdmin.from('users').upsert(
-        { email: user.email, name: user.name ?? null, image: user.image ?? null },
-        { onConflict: 'email' }
-      );
+
+      // Check if user already exists
+      const { data: existing } = await supabaseAdmin
+        .from('users')
+        .select('id, name, image')
+        .eq('email', user.email)
+        .single();
+
+      if (existing) {
+        // User exists — only update image if they haven't set a custom one
+        // Never overwrite name (user may have customized it)
+        if (!existing.image && user.image) {
+          await supabaseAdmin
+            .from('users')
+            .update({ image: user.image })
+            .eq('email', user.email);
+        }
+      } else {
+        // New user — insert with Google name + image as defaults
+        await supabaseAdmin.from('users').insert({
+          email: user.email,
+          name: user.name ?? null,
+          image: user.image ?? null,
+        });
+      }
+
       return true;
     },
     async jwt({ token, trigger }) {
