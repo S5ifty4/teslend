@@ -69,7 +69,7 @@ export default async function HomePage() {
         {/* Bay Area map — decorative hero background */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/hero-map.png"
+          src="/hero-bg.jpg"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
