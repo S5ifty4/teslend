@@ -54,7 +54,7 @@ export default function MasterAccessoryCard({ accessory }: Props) {
           {(accessory.listing_count ?? 0) > 0 ? (
             <span
               className="text-xs font-semibold px-2 py-1 rounded-full border"
-              style={{ backgroundColor: 'white', color: '#E31937', borderColor: '#E31937' }}
+              style={{ backgroundColor: 'white', color: '#3E9142', borderColor: '#3E9142' }}
             >
               {accessory.listing_count} available
             </span>
