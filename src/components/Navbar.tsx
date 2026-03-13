@@ -45,7 +45,7 @@ export default function Navbar() {
           {session ? (
             <>
               <Link href="/listings/new" className="text-sm text-gray-600 hover:text-gray-900">
-                List Accessory
+                List
               </Link>
               <Link href="/how-it-works" className="text-sm text-gray-600 hover:text-gray-900">
                 How It Works
@@ -82,7 +82,7 @@ export default function Navbar() {
                     <div className="border-t border-gray-100 mt-1">
                       <button
                         onClick={() => { setDropdownOpen(false); signOut({ callbackUrl: '/' }); }}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 cursor-pointer" style={{ color: "#E31937" }}
                       >
                         Sign Out
                       </button>
@@ -130,7 +130,7 @@ export default function Navbar() {
               Browse
             </Link>
             <Link href="/listings/new" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
-              List Accessory
+              List
             </Link>
             <Link href="/how-it-works" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               How It Works
@@ -141,7 +141,7 @@ export default function Navbar() {
             <div className="pt-2 border-t mt-1">
               <button
                 onClick={() => { signOut({ callbackUrl: '/' }); setOpen(false); }}
-                className="w-full text-left py-2 text-sm text-gray-700 hover:text-gray-900 cursor-pointer"
+                className="w-full text-left py-2 text-sm hover:opacity-80 cursor-pointer" style={{ color: "#E31937" }}
               >
                 Sign Out
               </button>
