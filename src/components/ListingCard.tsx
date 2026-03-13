@@ -14,7 +14,7 @@ export default function ListingCard({ listing }: Props) {
 
   return (
     <Link href={`/listings/${listing.id}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
+      <Card className="overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer h-full">
         <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
           {img ? (
             <Image src={img} alt={listing.title} fill className="object-cover" />
@@ -34,11 +34,11 @@ export default function ListingCard({ listing }: Props) {
         </div>
         <CardContent className="p-4">
           <p className="font-semibold text-gray-900 line-clamp-1">{listing.title}</p>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-400 mt-1 font-medium">
             {listing.master_accessories?.name ?? 'Other'}
           </p>
           <div className="flex items-center justify-between mt-3">
-            <span className="font-bold text-lg text-gray-900">
+            <span className="font-bold text-xl text-gray-900">
               ${listing.daily_price}/day
             </span>
             <span className="text-xs text-gray-400 flex items-center gap-1">

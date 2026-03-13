@@ -62,7 +62,7 @@ export default function HowItWorksPage() {
       </div>
 
       {/* For renters */}
-      <section className="mb-14">
+      <section className="mb-8 bg-gray-50 rounded-xl p-6">
         <h2 className="text-2xl font-bold mb-6">For Renters</h2>
         <div className="space-y-6">
           {[
@@ -88,7 +88,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* For owners */}
-      <section className="mb-14">
+      <section className="mb-8 bg-gray-50 rounded-xl p-6">
         <h2 className="text-2xl font-bold mb-6">For Owners</h2>
         <div className="space-y-6">
           {[

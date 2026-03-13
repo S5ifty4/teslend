@@ -13,7 +13,7 @@ export default function Footer() {
 
         <nav className="flex flex-wrap gap-5 justify-center">
           <Link href="/browse" className="hover:text-gray-700">Browse</Link>
-          <Link href="/listings/new" className="hover:text-gray-700">List an Accessory</Link>
+          <Link href="/listings/new" className="hover:text-gray-700">List</Link>
           <Link href="/how-it-works" className="hover:text-gray-700">How It Works</Link>
           <Link href="/contact" className="hover:text-gray-700">Contact</Link>
         </nav>

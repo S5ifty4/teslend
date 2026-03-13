@@ -59,7 +59,7 @@ export default function FilterBar({ accessories = [] }: Props) {
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
-      <div className="flex flex-col gap-1 w-full sm:w-64">
+      <div className="flex flex-col gap-0.5 w-full sm:w-64">
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Tesla Model</span>
         <Select value={model || primaryVehicle || 'all'} onValueChange={(v) => updateModel(v ?? '')}>
           <SelectTrigger className="w-full">
@@ -74,7 +74,7 @@ export default function FilterBar({ accessories = [] }: Props) {
         </Select>
       </div>
 
-      <div className="flex flex-col gap-1 w-full sm:w-64">
+      <div className="flex flex-col gap-0.5 w-full sm:w-64">
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Item Type</span>
         <Select value={itemValue} onValueChange={(v) => updateItem(v ?? '')}>
           <SelectTrigger className="w-full">

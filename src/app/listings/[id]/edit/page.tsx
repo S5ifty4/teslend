@@ -38,7 +38,6 @@ export default function EditListingPage() {
   const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState('');
   const [error, setError] = useState('');
-  const [saved, setSaved] = useState(false);
   const { models: teslaModels } = useTeslaModels();
 
   const { register, handleSubmit, setValue, reset, formState: { errors, isSubmitting } } = useForm<FormData>({
@@ -106,6 +105,7 @@ export default function EditListingPage() {
       <h1 className="text-3xl font-bold mb-8">Edit Listing</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Item Details</p>
         <div>
           <Label>Title *</Label>
           <Input {...register('title')} className="mt-1" />
@@ -118,6 +118,9 @@ export default function EditListingPage() {
           {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description.message}</p>}
         </div>
 
+        <div className="pt-2 border-t border-gray-100">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Vehicle & Pricing</p>
+        </div>
         <div className="grid grid-cols-5 gap-4">
           <div className="col-span-3">
             <Label>Tesla Model *</Label>
@@ -156,6 +159,9 @@ export default function EditListingPage() {
           </div>
         </div>
 
+        <div className="pt-2 border-t border-gray-100">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Location</p>
+        </div>
         <div className="grid grid-cols-5 gap-4">
           <div className="col-span-3">
             <Label>City *</Label>
@@ -196,6 +202,9 @@ export default function EditListingPage() {
           {errors.master_accessory_id && <p className="text-xs text-red-500 mt-1">{errors.master_accessory_id.message}</p>}
         </div>
 
+        <div className="pt-2 border-t border-gray-100">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Photos</p>
+        </div>
         <div>
           <Label>Photos (up to 5)</Label>
           <div className="mt-2">

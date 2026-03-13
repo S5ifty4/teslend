@@ -85,6 +85,7 @@ export default async function BrowsePage({ searchParams }: Props) {
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-4">
         <h1 className="text-3xl font-bold">Browse Accessories</h1>
+        <p className="text-gray-500 mt-1 text-sm">Tesla-specific gear for rent in the Bay Area</p>
       </div>
 
       <Suspense>

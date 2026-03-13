@@ -163,6 +163,10 @@ export default function ProfilePage() {
           <p className="text-xs text-gray-400 mt-1">Shared with listing owners when you send an inquiry.</p>
         </div>
 
+        <div className="pt-4 border-t border-gray-100">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Your Tesla</p>
+        </div>
+
         <div>
           <Label>Primary Vehicle <span className="text-gray-400 font-normal">(optional)</span></Label>
           <Select

@@ -59,13 +59,14 @@ export default function MyListingsPage() {
       {loading ? (
         <div className="text-center py-16 text-gray-400">Loading...</div>
       ) : listings.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
+        <div className="text-center py-20 text-gray-400 max-w-sm mx-auto">
           <div className="w-16 h-16 border-2 border-gray-200 rounded-xl flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
           </div>
-          <p className="mb-4">No listings yet.</p>
+          <h3 className="text-base font-semibold text-gray-700 mb-1">No listings yet</h3>
+          <p className="text-sm mb-6 text-gray-400">Be the first in your area to list a Tesla accessory for rent.</p>
           <Link href="/listings/new">
             <Button style={{ backgroundColor: '#3E6AE1', color: 'white' }}>
               List your first accessory
@@ -77,7 +78,7 @@ export default function MyListingsPage() {
           {listings.map((listing) => (
             <Card key={listing.id}>
               <CardContent className="p-4 flex items-center gap-4">
-                <div className="w-20 h-16 relative rounded overflow-hidden bg-gray-100 flex-shrink-0">
+                <div className="w-24 h-20 relative rounded overflow-hidden bg-gray-100 flex-shrink-0">
                   {listing.images?.[0] ? (
                     <Image src={listing.images[0]} alt={listing.title} fill className="object-cover" />
                   ) : (

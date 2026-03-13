@@ -72,6 +72,7 @@ export default function ListingForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl">
+      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Item Details</p>
       <div>
         <Label>Title *</Label>
         <Input {...register('title')} placeholder="Tesla Model Y Hitch Rack" className="mt-1" />
@@ -84,6 +85,9 @@ export default function ListingForm() {
         {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description.message}</p>}
       </div>
 
+      <div className="pt-2 border-t border-gray-100">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Vehicle & Pricing</p>
+      </div>
       <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>Tesla Model *</Label>
@@ -119,6 +123,9 @@ export default function ListingForm() {
         </div>
       </div>
 
+      <div className="pt-2 border-t border-gray-100">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Location</p>
+      </div>
       <div className="grid grid-cols-5 gap-4">
         <div className="col-span-3">
           <Label>City *</Label>
@@ -161,6 +168,9 @@ export default function ListingForm() {
         {errors.master_accessory_id && <p className="text-xs text-red-500 mt-1">{errors.master_accessory_id.message}</p>}
       </div>
 
+      <div className="pt-2 border-t border-gray-100">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Photos</p>
+      </div>
       <div>
         <Label>Photos (up to 5)</Label>
         <div className="mt-2">

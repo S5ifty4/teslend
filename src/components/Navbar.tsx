@@ -61,7 +61,7 @@ export default function Navbar() {
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-50 overflow-hidden">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-50">
                     <div className="px-4 py-2 border-b border-gray-100">
                       <p className="text-sm font-medium text-gray-900 truncate">{name}</p>
                     </div>
@@ -126,16 +126,16 @@ export default function Navbar() {
                 <p className="text-sm font-medium text-gray-900">{name}</p>
               </div>
             </div>
-            <Link href="/browse" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+            <Link href="/browse" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               Browse
             </Link>
-            <Link href="/listings/new" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+            <Link href="/listings/new" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               List
             </Link>
-            <Link href="/how-it-works" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+            <Link href="/how-it-works" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               How It Works
             </Link>
-            <Link href="/profile" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
+            <Link href="/profile" className="py-2.5 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               Edit Profile
             </Link>
             <div className="pt-2 border-t mt-1">
