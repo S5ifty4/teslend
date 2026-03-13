@@ -4,12 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import UserAvatar from '@/components/UserAvatar';
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -44,9 +46,12 @@ export default function Navbar() {
           </Link>
           {session ? (
             <>
-              <Link href="/listings/new" className="text-sm text-gray-600 hover:text-gray-900">
+              <button
+                className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer"
+                onClick={() => router.push('/listings/new')}
+              >
                 List
-              </Link>
+              </button>
               <Link href="/how-it-works" className="text-sm text-gray-600 hover:text-gray-900">
                 How It Works
               </Link>

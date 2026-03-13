@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ListingGrid from '@/components/ListingGrid';
 import MasterAccessoryCard from '@/components/MasterAccessoryCard';
+import ListButton from '@/components/ListButton';
 import { Listing, MasterAccessory } from '@/lib/types';
 import { supabaseAdmin } from '@/lib/supabase';
 
@@ -91,11 +92,7 @@ export default async function HomePage() {
                 Browse Accessories
               </Button>
             </Link>
-            <Link href="/listings/new">
-              <Button size="lg" className="min-w-[200px] bg-white text-black border border-white hover:bg-gray-100 hover:text-black">
-                List an Accessory
-              </Button>
-            </Link>
+            <ListButton size="lg" className="min-w-[200px] bg-white text-black border border-white hover:bg-gray-100 hover:text-black" label="List an Accessory" />
           </div>
         </div>
       </section>
@@ -176,8 +173,7 @@ export default async function HomePage() {
                 ))}
               </div>
               <div className="mt-5">
-                <Link href="/listings/new">
-                  <Button size="sm" variant="outline" className="min-w-[160px]">
+                <ListButton size="sm" variant="outline" className="min-w-[160px]">
                     List an Accessory
                   </Button>
                 </Link>
