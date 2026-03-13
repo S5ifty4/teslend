@@ -173,10 +173,7 @@ export default async function HomePage() {
                 ))}
               </div>
               <div className="mt-5">
-                <ListButton size="sm" variant="outline" className="min-w-[160px]">
-                    List an Accessory
-                  </Button>
-                </Link>
+                <ListButton size="sm" variant="outline" className="min-w-[160px]" label="List an Accessory" />
               </div>
             </div>
           </div>
