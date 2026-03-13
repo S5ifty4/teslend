@@ -91,7 +91,7 @@ export default function MyListingsPage() {
                 <div className="flex-1 min-w-0">
                   <Link href={`/listings/${listing.id}`} className="font-semibold truncate hover:underline block">{listing.title}</Link>
                   <div className="flex gap-2 mt-1 flex-wrap">
-                    <Badge style={{ backgroundColor: 'transparent', color: '#3E9142', border: '1px solid #3E9142' }} className="text-xs">{listing.tesla_model}</Badge>
+                    <Badge style={{ backgroundColor: 'white', color: '#3E9142', border: '1px solid #3E9142' }} className="text-xs">{listing.tesla_model}</Badge>
                   </div>
                   <p className="text-sm font-semibold mt-1 text-gray-900">${listing.daily_price}/day</p>
                 </div>
