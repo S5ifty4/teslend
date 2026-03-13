@@ -161,11 +161,12 @@ export default function HowItWorksPage() {
         >
           Browse Accessories
         </Link>
-        <Link
-          href="/listings/new"
+        <ListButton
+          variant="outline"
           className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 text-center min-w-[180px]"
-        >
-          List an Accessory
+          label="List an Accessory"
+        />
+        
         </Link>
       </div>
     </div>

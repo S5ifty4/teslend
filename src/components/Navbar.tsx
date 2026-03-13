@@ -44,6 +44,9 @@ export default function Navbar() {
           <Link href="/browse" className="text-sm text-gray-600 hover:text-gray-900">
             Browse
           </Link>
+          <Link href="/how-it-works" className="text-sm text-gray-600 hover:text-gray-900">
+            How It Works
+          </Link>
           {session ? (
             <>
               <button
@@ -52,9 +55,6 @@ export default function Navbar() {
               >
                 List
               </button>
-              <Link href="/how-it-works" className="text-sm text-gray-600 hover:text-gray-900">
-                How It Works
-              </Link>
               {/* Avatar dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
