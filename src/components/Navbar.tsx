@@ -97,7 +97,7 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: 'white', color: '#E31937', border: '1.5px solid #E31937' }}>
+            <Button size="sm" onClick={() => signIn('google', { callbackUrl: window.location.pathname })} style={{ backgroundColor: 'white', color: '#E31937', border: '1.5px solid #E31937' }}>
               Sign In
             </Button>
           )}
@@ -114,7 +114,7 @@ export default function Navbar() {
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           ) : (
-            <Button size="sm" onClick={() => signIn('google')} style={{ backgroundColor: 'white', color: '#E31937', border: '1.5px solid #E31937' }}>
+            <Button size="sm" onClick={() => signIn('google', { callbackUrl: window.location.pathname })} style={{ backgroundColor: 'white', color: '#E31937', border: '1.5px solid #E31937' }}>
               Sign In
             </Button>
           )}
