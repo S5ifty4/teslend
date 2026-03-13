@@ -70,7 +70,7 @@ export default function Navbar() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                       onClick={() => setDropdownOpen(false)}
                     >
-                      Profile Settings
+                      Edit Profile
                     </Link>
                     <Link
                       href="/my-listings"
@@ -136,7 +136,7 @@ export default function Navbar() {
               How It Works
             </Link>
             <Link href="/profile" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
-              Profile Settings
+              Edit Profile
             </Link>
             <div className="pt-2 border-t mt-1">
               <button
