@@ -164,7 +164,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Right: price + inquiry */}
-        <div className="space-y-6">
+        <div className="space-y-6 sticky top-6 self-start">
           <Card>
             <CardContent className="p-6">
               <div className="text-4xl font-bold mb-1 text-gray-900">

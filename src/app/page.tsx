@@ -76,15 +76,15 @@ export default async function HomePage() {
           style={{ opacity: 0.55, objectPosition: '60% center' }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6">
+          <h1 className="text-5xl font-bold mb-2 leading-tight">
             More adventure<br /><span style={{ color: '#E31937' }}>Less clutter</span>
-            <span className="block text-xl font-normal text-gray-400 mt-3">
-              Rent what you need<br />List what you own
-            </span>
-            <span className="block text-sm font-normal text-gray-500 mt-2">
-              Currently serving the Bay Area
-            </span>
           </h1>
+          <p className="text-lg font-normal text-gray-400 mb-2">
+            Rent what you need &middot; List what you own
+          </p>
+          <p className="text-xs font-normal text-gray-400 mb-6 uppercase tracking-wider">
+            Currently serving the Bay Area
+          </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
               <Button size="lg" className="min-w-[200px]" style={{ backgroundColor: '#E31937', color: 'white' }}>
