@@ -50,10 +50,6 @@ export default function Navbar() {
               <Link href="/listings/new" className="text-sm text-gray-600 hover:text-gray-900">
                 List Accessory
               </Link>
-              <Link href="/my-listings" className="text-sm text-gray-600 hover:text-gray-900">
-                My Listings
-              </Link>
-
               {/* Avatar dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -138,9 +134,6 @@ export default function Navbar() {
             </Link>
             <Link href="/listings/new" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               List Accessory
-            </Link>
-            <Link href="/my-listings" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
-              My Listings
             </Link>
             <Link href="/profile" className="py-2 text-sm text-gray-700 hover:text-gray-900" onClick={() => setOpen(false)}>
               Profile Settings
