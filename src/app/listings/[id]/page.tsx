@@ -102,9 +102,9 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
               {/* Show all compatible models if available, else just the lister's model */}
               {(listing.master_accessories as { name?: string; compatibility?: string[] } | null)?.compatibility?.length
                 ? (listing.master_accessories as { compatibility: string[] }).compatibility.map((m) => (
-                    <Badge key={m} style={{ backgroundColor: '#3E9142', color: 'white' }}>{m}</Badge>
+                    <Badge key={m} style={{ backgroundColor: 'transparent', color: '#3E9142', border: '1px solid #3E9142' }}>{m}</Badge>
                   ))
-                : <Badge style={{ backgroundColor: '#3E9142', color: 'white' }}>{listing.tesla_model}</Badge>
+                : <Badge style={{ backgroundColor: 'transparent', color: '#3E9142', border: '1px solid #3E9142' }}>{listing.tesla_model}</Badge>
               }
               <Badge variant="outline" className="text-gray-600">
                 {(listing.master_accessories as { name?: string } | null)?.name ?? 'Other'}
