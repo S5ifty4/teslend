@@ -62,23 +62,6 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
     name: listing.title,
     description: listing.description ?? `Rent a ${listing.title} in ${listing.city ?? 'the Bay Area'}.`,
     image: images,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'USD',
-      price: listing.daily_price,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: listing.daily_price,
-        priceCurrency: 'USD',
-        unitText: 'DAY',
-      },
-      availability: 'https://schema.org/InStock',
-      url: `https://teslend.com/listings/${id}`,
-      seller: {
-        '@type': 'Person',
-        name: (listing.users as { name?: string } | null)?.name ?? 'Teslend User',
-      },
-    },
     areaServed: {
       '@type': 'Place',
       name: listing.city ?? 'San Francisco Bay Area',
