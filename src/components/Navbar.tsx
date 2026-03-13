@@ -43,7 +43,7 @@ export default function Navbar() {
               <Link href="/profile" className="hover:opacity-80">
                 <UserAvatar src={avatar} name={name} size={32} />
               </Link>
-              <Button variant="outline" size="sm" onClick={() => signOut()}>
+              <Button variant="outline" size="sm" onClick={() => signOut({ callbackUrl: '/' })}>
                 Sign Out
               </Button>
             </>
@@ -97,7 +97,7 @@ export default function Navbar() {
               Edit Profile
             </Link>
             <div className="pt-2 border-t mt-1">
-              <Button variant="outline" size="sm" onClick={() => { signOut(); setOpen(false); }} className="w-full">
+              <Button variant="outline" size="sm" onClick={() => { signOut({ callbackUrl: '/' }); setOpen(false); }} className="w-full">
                 Sign Out
               </Button>
             </div>
