@@ -73,7 +73,7 @@ export default async function HomePage() {
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
-          style={{ opacity: 0.55, objectPosition: '20% center' }}
+          style={{ opacity: 0.55, objectPosition: '45% center' }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-2 leading-tight">
