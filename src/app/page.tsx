@@ -87,12 +87,12 @@ export default async function HomePage() {
           </h1>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/browse">
-              <Button size="lg" style={{ backgroundColor: '#E31937', color: 'white' }}>
+              <Button size="lg" className="min-w-[200px]" style={{ backgroundColor: '#E31937', color: 'white' }}>
                 Browse Accessories
               </Button>
             </Link>
             <Link href="/listings/new">
-              <Button size="lg" className="bg-white text-black border border-white hover:bg-gray-100 hover:text-black">
+              <Button size="lg" className="min-w-[200px] bg-white text-black border border-white hover:bg-gray-100 hover:text-black">
                 List an Accessory
               </Button>
             </Link>
