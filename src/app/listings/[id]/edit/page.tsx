@@ -180,7 +180,11 @@ export default function EditListingPage() {
             }}
           >
             <SelectTrigger className="mt-1 w-full">
-              <SelectValue placeholder="Select accessory type" />
+              <SelectValue placeholder="Select accessory type">
+                {selectedMasterId && selectedMasterId !== 'other'
+                  ? masterAccessories.find((a) => a.id === selectedMasterId)?.name
+                  : selectedMasterId === 'other' ? 'Other' : 'Select accessory type'}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               {compatibleItems.map((acc) => (
