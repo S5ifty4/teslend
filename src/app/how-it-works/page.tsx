@@ -163,7 +163,7 @@ export default function HowItWorksPage() {
         </Link>
         <ListButton
           variant="outline"
-          className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 text-center min-w-[180px]"
+          className="h-auto px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 text-center min-w-[180px]"
           label="List an Accessory"
         />
       </div>
