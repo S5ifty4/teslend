@@ -155,14 +155,14 @@ export default function HowItWorksPage() {
       <div className="flex gap-4 flex-wrap">
         <Link
           href="/browse"
-          className="px-6 py-3 rounded-lg text-white text-sm font-semibold"
+          className="px-6 py-3 rounded-lg text-white text-sm font-semibold text-center min-w-[180px]"
           style={{ backgroundColor: '#E31937' }}
         >
           Browse Accessories
         </Link>
         <Link
           href="/listings/new"
-          className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50"
+          className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 text-center min-w-[180px]"
         >
           List an Accessory
         </Link>

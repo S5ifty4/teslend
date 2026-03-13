@@ -150,7 +150,7 @@ export default async function HomePage() {
               </div>
               <div className="mt-5">
                 <Link href="/browse">
-                  <Button size="sm" style={{ backgroundColor: '#E31937', color: 'white' }}>
+                  <Button size="sm" className="min-w-[160px]" style={{ backgroundColor: '#E31937', color: 'white' }}>
                     Browse Accessories
                   </Button>
                 </Link>
@@ -177,7 +177,7 @@ export default async function HomePage() {
               </div>
               <div className="mt-5">
                 <Link href="/listings/new">
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" className="min-w-[160px]">
                     List an Accessory
                   </Button>
                 </Link>
