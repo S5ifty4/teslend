@@ -90,8 +90,7 @@ export default function EditListingPage() {
       body: JSON.stringify({ ...data, images }),
     });
     if (res.ok) {
-      setSaved(true);
-      setTimeout(() => router.push(`/listings/${id}`), 1000);
+      router.push(`/listings/${id}`);
     } else {
       const d = await res.json();
       setError(d.error ?? 'Something went wrong');
