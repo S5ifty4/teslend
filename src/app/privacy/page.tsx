@@ -61,10 +61,10 @@ export default function PrivacyPage() {
             We share data with the following third-party services to operate the Platform:
           </p>
           <ul className="list-disc pl-5 mt-2 space-y-1.5">
-            <li><strong>Supabase</strong> — database and file storage (supabase.com)</li>
-            <li><strong>Vercel</strong> — hosting and deployment (vercel.com)</li>
-            <li><strong>Resend</strong> — transactional email delivery (resend.com)</li>
-            <li><strong>Google</strong> — authentication via Google OAuth (google.com)</li>
+            <li><strong>Cloud database provider</strong> — secure storage of account data, listings, and uploaded files</li>
+            <li><strong>Cloud hosting provider</strong> — application hosting and global content delivery</li>
+            <li><strong>Email delivery provider</strong> — transactional emails (inquiry confirmations, contact replies)</li>
+            <li><strong>Google</strong> — authentication via Google Sign-In</li>
           </ul>
         </section>
 
