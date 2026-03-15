@@ -30,6 +30,41 @@ function formatPhone(raw: string): string {
   return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
 }
 
+// Compress image to under 3MB using canvas (same as listing ImageUpload)
+async function compressImage(file: File, maxBytes = 3 * 1024 * 1024): Promise<File> {
+  return new Promise((resolve) => {
+    const img = document.createElement('img');
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const canvas = document.createElement('canvas');
+      let { width, height } = img;
+      const maxDim = 1200;
+      if (width > maxDim || height > maxDim) {
+        const ratio = Math.min(maxDim / width, maxDim / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, width, height);
+      const tryQuality = (q: number) => {
+        canvas.toBlob((blob) => {
+          if (!blob) { resolve(file); return; }
+          if (blob.size <= maxBytes || q <= 0.4) {
+            resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
+          } else {
+            tryQuality(q - 0.1);
+          }
+        }, 'image/jpeg', q);
+      };
+      tryQuality(0.85);
+    };
+    img.src = url;
+  });
+}
+
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
@@ -72,14 +107,10 @@ export default function ProfilePage() {
     }
   }, [status, session, router, setValue]);
 
-  async function handleAvatarUpload(file: File) {
-    // Reject files over 4MB (Vercel request body limit is 4.5MB)
-    if (file.size > 4 * 1024 * 1024) {
-      setError('Photo must be under 4MB. Please compress the image and try again.');
-      return;
-    }
+  async function handleAvatarUpload(rawFile: File) {
     setUploading(true);
     try {
+      const file = await compressImage(rawFile);
       const form = new FormData();
       form.append('file', file);
       const res = await fetch('/api/upload', { method: 'POST', body: form });
