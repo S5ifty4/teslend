@@ -14,9 +14,19 @@ export default function Navbar() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [displayName, setDisplayName] = useState<string | null | undefined>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const avatar = session?.user?.image;
-  const name = session?.user?.name;
+  const name = displayName ?? session?.user?.name;
+
+  // Fetch current display name from DB (may differ from Google name)
+  useEffect(() => {
+    if (!session) { setDisplayName(null); return; }
+    fetch('/api/user')
+      .then((r) => r.json())
+      .then((u) => { if (u?.name) setDisplayName(u.name); })
+      .catch(() => {});
+  }, [session]);
 
   // Close dropdown on outside click
   useEffect(() => {
