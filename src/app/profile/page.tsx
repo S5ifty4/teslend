@@ -73,20 +73,32 @@ export default function ProfilePage() {
   }, [status, session, router, setValue]);
 
   async function handleAvatarUpload(file: File) {
-    setUploading(true);
-    const form = new FormData();
-    form.append('file', file);
-    const res = await fetch('/api/upload', { method: 'POST', body: form });
-    const data = await res.json();
-    if (data.url) {
-      setAvatarUrl(data.url);
-      await fetch('/api/user', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: data.url }),
-      });
+    // Reject files over 4MB (Vercel request body limit is 4.5MB)
+    if (file.size > 4 * 1024 * 1024) {
+      setError('Photo must be under 4MB. Please compress the image and try again.');
+      return;
     }
-    setUploading(false);
+    setUploading(true);
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: form });
+      const data = await res.json();
+      if (data.url) {
+        setAvatarUrl(data.url);
+        await fetch('/api/user', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: data.url }),
+        });
+      } else {
+        setError(data.error ?? 'Upload failed. Please try again.');
+      }
+    } catch {
+      setError('Upload failed. Check your connection and try again.');
+    } finally {
+      setUploading(false);
+    }
   }
 
   async function onSubmit(data: FormData) {
