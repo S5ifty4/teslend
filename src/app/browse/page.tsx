@@ -48,7 +48,21 @@ async function getListings(model?: string, category?: string, master?: string): 
       .order('created_at', { ascending: false })
       .limit(50);
 
-    if (model) query = query.eq('tesla_model', model);
+    if (model) {
+      // Find master accessories compatible with this model
+      const { data: compatAccs } = await supabaseAdmin
+        .from('master_accessories')
+        .select('id')
+        .contains('compatibility', [model]);
+      const compatIds = (compatAccs ?? []).map((a: { id: string }) => a.id);
+
+      if (compatIds.length > 0) {
+        // Match listings by lister's tesla_model OR by a compatible master accessory
+        query = query.or(`tesla_model.eq.${model},master_accessory_id.in.(${compatIds.join(',')})`);
+      } else {
+        query = query.eq('tesla_model', model);
+      }
+    }
     if (category) query = query.eq('category', category);
     if (master) {
       const { data: masterAcc } = await supabaseAdmin
