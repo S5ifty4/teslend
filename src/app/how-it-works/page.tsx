@@ -7,9 +7,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://teslend.com/how-it-works',
   },
-  alternates: {
-    canonical: 'https://teslend.com/how-it-works',
-  },
   title: 'How It Works | Teslend',
   description: 'Learn how Teslend connects Tesla owners with people who need their accessories for a weekend or a trip.',
 };
