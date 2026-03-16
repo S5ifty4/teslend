@@ -5,9 +5,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://teslend.com/terms',
   },
-  alternates: {
-    canonical: 'https://teslend.com/terms',
-  },
   title: 'Terms of Service',
   description: 'Teslend terms of service — read before using the platform.',
 };
