@@ -132,9 +132,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">About this item</p>
                   {ma.description && (() => {
-                    const parts = ma.description!.split(/
-
-(Note:)/);
+                    const parts = ma.description!.split(/\n\n(Note:)/);
                     const body = parts[0];
                     const note = parts.length > 1 ? parts[1] + parts[2] : null;
                     return (
