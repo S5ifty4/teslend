@@ -23,6 +23,23 @@ async function getListing(id: string): Promise<Listing | null> {
   }
 }
 
+
+async function getOwnerListings(userId: string, excludeId: string): Promise<{ id: string; title: string; images: string[]; daily_price: number }[]> {
+  try {
+    const { data } = await supabaseAdmin
+      .from('listings')
+      .select('id, title, images, daily_price')
+      .eq('user_id', userId)
+      .eq('active', true)
+      .neq('id', excludeId)
+      .order('created_at', { ascending: false })
+      .limit(4);
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const listing = await getListing(id);
@@ -53,6 +70,9 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
   const { id } = await params;
   const listing = await getListing(id);
   if (!listing) notFound();
+
+  const ownerId = (listing.users as { id?: string } | null)?.id;
+  const ownerListings = ownerId ? await getOwnerListings(ownerId, id) : [];
 
   const images = listing.images?.length ? listing.images : [];
 
@@ -165,12 +185,37 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
           {listing.users && (
             <Card>
-              <CardContent className="p-4 flex items-center gap-3">
-                <UserAvatar src={listing.users.image} name={listing.users.name} size={40} />
-                <div>
-                  <p className="font-medium text-sm">{listing.users.name ?? 'Tesla owner'}</p>
-                  <p className="text-xs text-gray-400">Listing owner</p>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <UserAvatar src={listing.users.image} name={listing.users.name} size={40} />
+                  <div>
+                    <p className="font-medium text-sm">{listing.users.name ?? 'Tesla owner'}</p>
+                    <p className="text-xs text-gray-400">Listing owner</p>
+                  </div>
                 </div>
+                {ownerListings.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-gray-100">
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">More from this owner</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {ownerListings.map((ol) => (
+                        <a key={ol.id} href={\} className="group flex-shrink-0">
+                          <div className="w-14 h-14 rounded overflow-hidden bg-gray-100 relative border border-gray-200 group-hover:border-gray-400 transition-colors">
+                            {ol.images?.[0] ? (
+                              <img src={ol.images[0]} alt={ol.title} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-0.5 w-14 truncate">{ol.title}</p>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}
