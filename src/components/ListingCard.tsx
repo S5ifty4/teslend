@@ -25,18 +25,24 @@ export default function ListingCard({ listing }: Props) {
               </svg>
             </div>
           )}
-          <Badge
-            className="absolute top-2 right-2 text-white"
-            style={{ backgroundColor: 'white', color: '#3E9142', border: '1px solid #3E9142' }}
-          >
-            {listing.tesla_model}
-          </Badge>
+
         </div>
         <CardContent className="p-4">
           <p className="font-semibold text-gray-900 line-clamp-1">{listing.title}</p>
           <p className="text-xs text-gray-400 mt-1 font-medium">
             {listing.master_accessories?.name ?? 'Other'}
           </p>
+          <div className="flex flex-wrap gap-1 mt-2">
+            {(() => {
+              const compat = (listing.master_accessories as { name?: string; compatibility?: string[] } | null)?.compatibility;
+              const models = compat?.length ? compat : [listing.tesla_model];
+              return models.map((m) => (
+                <span key={m} className="text-xs px-1.5 py-0.5 rounded border font-medium" style={{ color: '#3E9142', borderColor: '#3E9142', backgroundColor: 'white' }}>
+                  {m}
+                </span>
+              ));
+            })()}
+          </div>
           <div className="flex items-center justify-between mt-3">
             <span className="font-bold text-xl text-gray-900">
               ${listing.daily_price}/day

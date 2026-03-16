@@ -22,7 +22,7 @@ async function getRecentListings(): Promise<Listing[]> {
   try {
     const { data } = await supabaseAdmin
       .from('listings')
-      .select('*, users(id, name, image), master_accessories(name)')
+      .select('*, users(id, name, image), master_accessories(name, compatibility)')
       .eq('active', true)
       .order('created_at', { ascending: false })
       .limit(6);
