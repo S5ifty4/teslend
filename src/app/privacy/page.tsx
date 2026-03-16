@@ -2,6 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://teslend.com/privacy',
+  },
+  alternates: {
+    canonical: 'https://teslend.com/privacy',
+  },
   title: 'Privacy Policy',
   description: 'Teslend privacy policy — what data we collect and how we use it.',
 };
