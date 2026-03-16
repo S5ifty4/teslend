@@ -132,7 +132,9 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">About this item</p>
                   {ma.description && (() => {
-                    const parts = ma.description!.split(/\n\n(Note:)/);
+                    const parts = ma.description!.split(/
+
+(Note:)/);
                     const body = parts[0];
                     const note = parts.length > 1 ? parts[1] + parts[2] : null;
                     return (
@@ -198,7 +200,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                     <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">More from this owner</p>
                     <div className="flex gap-2 flex-wrap">
                       {ownerListings.map((ol) => (
-                        <a key={ol.id} href={\} className="group flex-shrink-0">
+                        <a key={ol.id} href={`/listings/${ol.id}`} className="group flex-shrink-0">
                           <div className="w-14 h-14 rounded overflow-hidden bg-gray-100 relative border border-gray-200 group-hover:border-gray-400 transition-colors">
                             {ol.images?.[0] ? (
                               <img src={ol.images[0]} alt={ol.title} className="w-full h-full object-cover" />
