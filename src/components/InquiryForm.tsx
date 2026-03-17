@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTeslaModels } from '@/lib/useTeslaModels';
+import { Loader2 } from 'lucide-react';
 
 const schema = z.object({
   start_date: z.string().min(1, 'Start date required'),
@@ -221,7 +222,7 @@ export default function InquiryForm({ listingId, listingTitle, dailyPrice }: Pro
         className="w-full text-white"
         style={{ backgroundColor: '#3E6AE1' }}
       >
-        {isSubmitting ? 'Sending...' : 'Send Inquiry'}
+        {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Sending...</> : 'Send Inquiry'}
       </Button>
     </form>
   );

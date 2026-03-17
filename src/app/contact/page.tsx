@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
+import { Loader2 } from 'lucide-react';
   Select,
   SelectContent,
   SelectItem,
@@ -156,7 +157,7 @@ export default function ContactPage() {
             className="w-full"
             style={{ backgroundColor: '#3E6AE1', color: 'white' }}
           >
-            {status === 'loading' ? 'Sending...' : 'Send Message'}
+            {status === 'loading' ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Sending...</> : 'Send Message'}
           </Button>
         </form>
       )}

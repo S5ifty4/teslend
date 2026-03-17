@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ImageUpload from './ImageUpload';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 import { MasterAccessory } from '@/lib/types';
+import { Loader2 } from 'lucide-react';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
@@ -186,7 +187,7 @@ export default function ListingForm() {
         className="text-white px-8"
         style={{ backgroundColor: '#3E6AE1' }}
       >
-        {isSubmitting ? 'Publishing...' : 'Publish Listing'}
+        {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Publishing...</> : 'Publish Listing'}
       </Button>
     </form>
   );

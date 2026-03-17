@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ImageUpload from '@/components/ImageUpload';
 import { useTeslaModels } from '@/lib/useTeslaModels';
 import { Listing, MasterAccessory } from '@/lib/types';
+import { Loader2 } from 'lucide-react';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
@@ -219,7 +220,7 @@ export default function EditListingPage() {
             className="text-white px-8"
             style={{ backgroundColor: '#3E6AE1' }}
           >
-            {isSubmitting ? 'Saving...' : 'Save Changes'}
+            {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving...</> : 'Save Changes'}
           </Button>
           <Button type="button" variant="outline" onClick={() => router.push(`/listings/${id}`)}>
             Cancel
