@@ -15,8 +15,9 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [displayName, setDisplayName] = useState<string | null | undefined>(null);
+  const [displayImage, setDisplayImage] = useState<string | null | undefined>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const avatar = session?.user?.image;
+  const avatar = displayImage ?? session?.user?.image;
   const name = displayName ?? session?.user?.name;
 
   // Fetch current display name from DB (may differ from Google name)
@@ -24,7 +25,7 @@ export default function Navbar() {
     if (!session) { setDisplayName(null); return; }
     fetch('/api/user')
       .then((r) => r.json())
-      .then((u) => { if (u?.name) setDisplayName(u.name); })
+      .then((u) => { if (u?.name) setDisplayName(u.name); if (u?.image) setDisplayImage(u.image); })
       .catch(() => {});
   }, [session]);
 
